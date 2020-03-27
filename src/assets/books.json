@@ -1,0 +1,20 @@
+{
+    "books": [
+        {
+  "title": "A Clockwork Orange",
+  "description": "A Clockwork Orange, novel by Anthony Burgess, published in 1962. Set in a dismal dystopian England, it is the first-person account of a juvenile delinquent who undergoes state-sponsored psychological rehabilitation for his aberrant behaviour.",
+  "language": "English",
+  "author": "Anthony Burgess",
+  "price": 20,
+  "image_url": "https://upload.wikimedia.org/wikipedia/en/thumb/2/23/Clockwork_orange.jpg/220px-Clockwork_orange.jpg"
+        },
+        {
+  "title": "Nineteen Eighty-Four",
+  "description": "Nineteen Eighty-Four: A Novel, often published as 1984, is a dystopian novel by English novelist George Orwell. It was published in June 1949 by Secker & Warburg as Orwell's ninth and final book completed in his lifetime. The story was mostly written at Barnhill, a farmhouse on the Scottish island of Jura, at times while Orwell suffered from severe tuberculosis. Thematically, Nineteen Eighty-Four centres on the consequences of government over-reach, totalitarianism, mass surveillance, and repressive regimentation of all persons and behaviours within society",
+  "language": "English",
+  "author": "George Orwell",
+  "price": 25,
+  "image_url": "https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/1984first.jpg/220px-1984first.jpg"
+        }
+    ]
+}
