@@ -6,7 +6,8 @@
   "language": "English",
   "author": "Anthony Burgess",
   "price": 20,
-  "image_url": "https://upload.wikimedia.org/wikipedia/en/thumb/2/23/Clockwork_orange.jpg/220px-Clockwork_orange.jpg"
+  "image_url": "https://upload.wikimedia.org/wikipedia/en/thumb/2/23/Clockwork_orange.jpg/220px-Clockwork_orange.jpg",
+  "quantity": 2
         },
         {
   "title": "Nineteen Eighty-Four",
@@ -14,7 +15,8 @@
   "language": "English",
   "author": "George Orwell",
   "price": 25,
-  "image_url": "https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/1984first.jpg/220px-1984first.jpg"
+  "image_url": "https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/1984first.jpg/220px-1984first.jpg",
+  "quantity": 3
         }
     ]
 }

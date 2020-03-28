@@ -9,12 +9,13 @@ import { BasketComponent } from './basket/basket.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MybooksComponent } from './mybooks/mybooks.component';
 import { BooksModule } from './books/books.module';
+import { BasketModule } from './basket/basket.module';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    BasketComponent,
     NavbarComponent,
     MybooksComponent
   ],
@@ -22,7 +23,8 @@ import { BooksModule } from './books/books.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    BooksModule
+    BooksModule,
+    BasketModule
   ],
   providers: [],
   bootstrap: [AppComponent]

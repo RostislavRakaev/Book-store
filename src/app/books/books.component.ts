@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpService } from '../services/http.service';
 import { Observable } from 'rxjs';
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { ModalWindowComponent } from './modal-window/modal-window.component';
 import { Books } from './book';
 
@@ -14,10 +14,12 @@ import { Books } from './book';
 
 
 export class BooksComponent implements OnInit {
-
+  selected = 'option2';
   url:string = '../assets/books.json'; 
 
   books:Observable<Books[]>;
+
+  basketDialogRef:MatDialogRef<ModalWindowComponent>
 
   constructor(private httpService:HttpService, public dialog: MatDialog) { }
 
@@ -30,9 +32,12 @@ export class BooksComponent implements OnInit {
   }
 
   openModal(book:Books[]) {
-    this.dialog.open(ModalWindowComponent, {
+    this.basketDialogRef = this.dialog.open(ModalWindowComponent, {
       data: book
     });
+    this.basketDialogRef.afterClosed().subscribe(result=>{
+      console.log(result)
+    })
   }
 
 

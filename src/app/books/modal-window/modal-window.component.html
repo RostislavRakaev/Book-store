@@ -4,7 +4,10 @@
 <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
 <img class="image_url" mat-card-md-image src="{{book.image_url}}">
 <mat-card-content>{{book.description}}</mat-card-content>
-<mat-card-footer>Price: {{book.price}}</mat-card-footer>
 <mat-card-actions>
-    <button>Buy</button>
+    <button (click)="addToBasket(book)">Buy</button>
 </mat-card-actions>
+    <div *ngIf="book.quantity <= 2" class="quantity">
+        Hurry up, only {{book.quantity}} left
+    </div>
+<mat-card-footer>Price: {{book.price}}$</mat-card-footer>

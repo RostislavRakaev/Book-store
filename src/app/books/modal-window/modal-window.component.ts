@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { Books } from '../book';
 
 
@@ -10,9 +10,12 @@ import { Books } from '../book';
 })
 export class ModalWindowComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public book:any) {}
+  constructor(public dialogRef: MatDialogRef<ModalWindowComponent>, @Inject(MAT_DIALOG_DATA) public book:any) {}
 
   ngOnInit() {
+  }
+  addToBasket(chosenBook){
+    this.dialogRef.close(chosenBook)
   }
 
 }
