@@ -7,6 +7,7 @@
   "author": "Anthony Burgess",
   "price": 20,
   "image_url": "https://upload.wikimedia.org/wikipedia/en/thumb/2/23/Clockwork_orange.jpg/220px-Clockwork_orange.jpg",
+  "genre": "black comedy",
   "quantity": 2
         },
         {
@@ -16,6 +17,7 @@
   "author": "George Orwell",
   "price": 25,
   "image_url": "https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/1984first.jpg/220px-1984first.jpg",
+  "genre": "Dystopian",
   "quantity": 3
         }
     ]

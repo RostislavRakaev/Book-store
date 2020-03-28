@@ -4,7 +4,8 @@ export interface Books{
     language: string;
     author: string;
     price: number;
-    image_url: string
+    image_url: string;
+    genre: string;
     quantity?: number;
   }
   

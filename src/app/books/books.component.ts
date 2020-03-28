@@ -14,12 +14,14 @@ import { Books } from './book';
 
 
 export class BooksComponent implements OnInit {
-  selected = 'option2';
   url:string = '../assets/books.json'; 
-
+  selected;
+  
   books:Observable<Books[]>;
 
-  basketDialogRef:MatDialogRef<ModalWindowComponent>
+  basket:Books[] = [];
+  basketDialogRef:MatDialogRef<ModalWindowComponent>;
+  
 
   constructor(private httpService:HttpService, public dialog: MatDialog) { }
 
@@ -36,7 +38,10 @@ export class BooksComponent implements OnInit {
       data: book
     });
     this.basketDialogRef.afterClosed().subscribe(result=>{
-      console.log(result)
+      if(result !== undefined) {
+        this.basket.push(result);
+        console.log(this.basket)
+      }
     })
   }
 
@@ -44,7 +49,6 @@ export class BooksComponent implements OnInit {
   ngOnInit() {
 
     this.getBooksApi();
-    
   }
 
   ngOnDestroy() {
