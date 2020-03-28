@@ -8,6 +8,7 @@
   "price": 20,
   "image_url": "https://upload.wikimedia.org/wikipedia/en/thumb/2/23/Clockwork_orange.jpg/220px-Clockwork_orange.jpg",
   "genre": "black comedy",
+  "published": 1962,
   "quantity": 2
         },
         {
@@ -18,6 +19,7 @@
   "price": 25,
   "image_url": "https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/1984first.jpg/220px-1984first.jpg",
   "genre": "Dystopian",
+  "published": 1949,
   "quantity": 3
         }
     ]

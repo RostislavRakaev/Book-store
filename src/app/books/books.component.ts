@@ -1,6 +1,6 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { HttpService } from '../services/http.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { ModalWindowComponent } from './modal-window/modal-window.component';
 import { Books } from './book';
@@ -13,11 +13,11 @@ import { Books } from './book';
 })
 
 
-export class BooksComponent implements OnInit {
+export class BooksComponent implements OnInit, OnDestroy {
   url:string = '../assets/books.json'; 
-  selected;
-  
+
   books:Observable<Books[]>;
+  subscriptionForBookApi:Subscription;
 
   basket:Books[] = [];
   basketDialogRef:MatDialogRef<ModalWindowComponent>;
@@ -26,11 +26,10 @@ export class BooksComponent implements OnInit {
   constructor(private httpService:HttpService, public dialog: MatDialog) { }
 
   getBooksApi() {
-    return this.httpService.getBooks(this.url)
-    .pipe()
-    .subscribe((data:any)=>{
+    this.subscriptionForBookApi = this.httpService.getBooks(this.url).subscribe((data:any)=>{
       return this.books = data.books;
     })
+    return this.subscriptionForBookApi
   }
 
   openModal(book:Books[]) {
@@ -47,13 +46,14 @@ export class BooksComponent implements OnInit {
 
 
   ngOnInit() {
-
     this.getBooksApi();
   }
 
   ngOnDestroy() {
-    this.getBooksApi().unsubscribe();
+    this.subscriptionForBookApi.unsubscribe();
   }
+
+
 
 
 }
