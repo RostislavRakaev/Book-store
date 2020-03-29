@@ -28,7 +28,8 @@ export class BasketService {
     }
   }
 
-  clearTheBasket():void {
-
+  clearTheBasket() {
+    this.basket = [];
+    return this.basket;
   }
 }

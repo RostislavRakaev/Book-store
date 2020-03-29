@@ -21,6 +21,28 @@
   "genre": "Dystopian",
   "published": 1949,
   "quantity": 3
+        },
+        {
+  "title": "Cat's Cradle",
+  "description": "Cat's Cradle is a satirical postmodern novel, with science fiction elements, by American writer Kurt Vonnegut. Vonnegut's fourth novel, it was first published in 1963, exploring and satirizing issues of science, technology, the purpose of religion, and the arms race, often through the use of black humor. After turning down his original thesis in 1947, the University of Chicago awarded Vonnegut his master's degree in anthropology in 1971 for Cat's Cradle",
+  "language": "English",
+  "author": "Kurt Vonnegut",
+  "price": 15,
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Cat%27s_Cradle_%281st_ed._cover%29_-_Vonnegut.jpg/220px-Cat%27s_Cradle_%281st_ed._cover%29_-_Vonnegut.jpg",
+  "genre": "Satire/Science fiction",
+  "published": 1963,
+  "quantity": 5
+        },
+        {
+  "title": "Ham on Rye",
+  "description": "Ham on Rye is a 1982 semi-autobiographical novel by American author and poet Charles Bukowski. Written in the first person, the novel follows Henry Chinaski, Bukowski’s thinly veiled alter ego, during his early years. Written in Bukowski’s characteristically straightforward prose, the novel tells of his coming-of-age in Los Angeles during the Great Depression.",
+  "language": "English",
+  "author": "Charles Bukowski",
+  "price": 10,
+  "image_url": "https://upload.wikimedia.org/wikipedia/en/2/20/HamOnRye.jpg",
+  "genre": "Autobiographical novel",
+  "published": 1982,
+  "quantity": 7
         }
     ]
 }

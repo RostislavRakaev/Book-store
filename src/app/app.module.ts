@@ -10,6 +10,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { MybooksComponent } from './mybooks/mybooks.component';
 import { BooksModule } from './books/books.module';
 import { BasketModule } from './basket/basket.module';
+import { DateFilterPipe } from './pipes/date-filter.pipe';
+import { LowToHighPipe } from './pipes/low-to-high.pipe';
+import { HighToLowPipe } from './pipes/high-to-low.pipe';
 
 
 
@@ -17,7 +20,10 @@ import { BasketModule } from './basket/basket.module';
   declarations: [
     AppComponent,
     NavbarComponent,
-    MybooksComponent
+    MybooksComponent,
+    DateFilterPipe,
+    LowToHighPipe,
+    HighToLowPipe
   ],
   imports: [
     BrowserModule,
