@@ -10,6 +10,7 @@ import { Books } from '../books/book';
 export class BasketComponent implements OnInit {
 
   basket:Books[] = [];
+  totalPrice:number;
 
   constructor(private basketService:BasketService) { 
     this.basket = this.basketService.showBasket();
@@ -19,7 +20,14 @@ export class BasketComponent implements OnInit {
     this.basketService.removeFromBasketOnlyOneItem(item);
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {  
+    
   }
+  ngAfterContentChecked() {
+    this.totalPrice = this.basket.reduce(function(prevValue:number, item:Books):number{
+      return prevValue += item.price;
+    },0)
+  }
+  
 
 }
