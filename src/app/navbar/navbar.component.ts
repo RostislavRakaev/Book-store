@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { BooksModule } from '../books/books.module';
+import { Books } from '../books/book';
+import { BasketService } from '../services/basket.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,7 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  basket:Books[] = [];
+
+  constructor(private basketService:BasketService) {
+    this.basket = this.basketService.showBasket()
+   }
 
   ngOnInit(): void {
   }
