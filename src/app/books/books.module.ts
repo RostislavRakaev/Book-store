@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { HttpService } from '../services/http.service';
+import { BasketService } from '../services/basket.service'
+
 import { HttpClientModule } from '@angular/common/http';
 import { BooksComponent } from './books.component';
 
@@ -30,7 +33,7 @@ import { FormsModule } from '@angular/forms'
   ],
   exports: [
   ],
-  providers: [HttpService],
+  providers: [HttpService, BasketService],
   bootstrap: [BooksComponent]
 })
 export class BooksModule { }
