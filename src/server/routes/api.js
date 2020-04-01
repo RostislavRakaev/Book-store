@@ -21,7 +21,7 @@ router.get('/', (req, res)=>{
 router.get('/books', (req,res)=>{
     Books.find((err, books)=>{
         res.send(books)
-    })
+    });
 });
 
 router.get('/books/:id', (req,res)=>{
