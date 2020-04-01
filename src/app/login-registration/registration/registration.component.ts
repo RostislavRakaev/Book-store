@@ -9,7 +9,9 @@ import { User } from '../user';
 })
 export class RegistrationComponent implements OnInit {
 
-  registerUserData = {};
+  registerUserData = {
+    
+  };
   constructor(private _auth:AuthService) { }
 
 

@@ -15,7 +15,7 @@ import { BasketService } from '../services/basket.service';
 
 
 export class BooksComponent implements OnInit, OnDestroy {
-  url:string = '../assets/books.json'; 
+  url:string = 'http://localhost:3000/api/books'; 
 
   books:Observable<Books[]>;
   subscriptionForBookApi:Subscription;
@@ -30,7 +30,7 @@ export class BooksComponent implements OnInit, OnDestroy {
 
   getBooksApi() {
     this.subscriptionForBookApi = this.httpService.getBooks(this.url).subscribe((data:any)=>{
-      return this.books = data.books;
+      return this.books = data;
     })
     return this.subscriptionForBookApi;
   }
