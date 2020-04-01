@@ -1,0 +1,31 @@
+<form>
+    <label>
+      <p class="label-txt">ENTER YOUR EMAIL</p>
+      <input type="text" class="input"  name="email" [(ngModel)]="registerUserData.email">
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+    </label>
+    <label>
+      <p class="label-txt">ENTER YOUR FIRST NAME</p>
+      <input type="text" class="input" name="name" [(ngModel)]="registerUserData.first_name">
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+    </label>
+    <label>
+      <p class="label-txt">ENTER YOUR LAST NAME</p>
+      <input type="text" class="input" name="name" [(ngModel)]="registerUserData.last_name">
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+    </label>
+    <label>
+      <p class="label-txt">ENTER YOUR PASSWORD</p>
+      <input type="password" class="input" name="password" [(ngModel)]="registerUserData.password">
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+    </label>
+    <button type="button" (click)="registerUser()">submit</button>
+  </form>

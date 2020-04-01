@@ -14,6 +14,7 @@ import { DateFilterPipe } from './pipes/date-filter.pipe';
 import { LowToHighPipe } from './pipes/low-to-high.pipe';
 import { HighToLowPipe } from './pipes/high-to-low.pipe';
 import { BasketService } from './services/basket.service';
+import { LoginRegistrationModule } from './login-registration/login-registration.module';
 
 
 
@@ -31,7 +32,8 @@ import { BasketService } from './services/basket.service';
     AppRoutingModule,
     BrowserAnimationsModule,
     BooksModule,
-    BasketModule
+    BasketModule,
+    LoginRegistrationModule
   ],
   providers: [BasketService],
   bootstrap: [AppComponent]
