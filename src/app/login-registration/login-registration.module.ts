@@ -7,6 +7,7 @@ import { AuthService } from '../services/auth.service';
 
 
 
+
 @NgModule({
   declarations: [LoginComponent, RegistrationComponent],
   imports: [

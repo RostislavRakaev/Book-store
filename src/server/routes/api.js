@@ -14,8 +14,32 @@ mongoose.connect(db, err=>{
     }
 })
 
+
 router.get('/', (req, res)=>{
-    res.send('From Api rounder')
+    res.send('From Api rounder');
+
+    async function newBook() {
+        let marvin = await new Books({
+            title: 'Marvin',
+            language: 'some'
+        });
+
+        marvin.save()
+        console.log('new Book added');
+
+        let user1 = await new User({
+            first_name: 'Alex',
+            books: marvin._id
+        });
+
+        user1.save(err=>{
+            if(err) {
+                console.log(err)
+            }
+        })
+    }
+
+    newBook();
 });
 
 router.get('/books', (req,res)=>{
@@ -37,6 +61,12 @@ router.get('/books/:id', (req,res)=>{
             log.error('Internal error(%d): %s',res.statusCode,err.message);
             return res.send({ error: 'Server error' });
         }
+    })
+})
+
+router.get('/register', (req, res)=>{
+    User.find((err, user)=>{
+        res.send(user);
     })
 })
 

@@ -10,11 +10,11 @@ const UserSchema = new Schema({
     },
     email: {
         type: String, 
-        required: true
+        required: false
     },
     password: {
         type: String,
-        required: true
+        required: false
     },
     date: {
         type: Date,
@@ -23,7 +23,9 @@ const UserSchema = new Schema({
     isAdmin: {
         type: Boolean,
         default: false
-    }
+    },
+    books: 
+        [{ type: mongoose.Schema.Types.ObjectId, ref: 'books' }]
 });
 
-module.exports = User = mongoose.model('users', UserSchema)
+module.exports = User = mongoose.model('users', UserSchema);

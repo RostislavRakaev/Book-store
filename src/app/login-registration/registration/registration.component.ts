@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from '../user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -10,9 +11,14 @@ import { User } from '../user';
 export class RegistrationComponent implements OnInit {
 
   registerUserData = {
-    
+    first_name: '',
+    last_name: '',
+    email: '',
+    password: '',
+    isAdmin: false
   };
-  constructor(private _auth:AuthService) { }
+    
+  constructor(private _auth:AuthService, private router: Router) { }
 
 
   ngOnInit(): void {
@@ -25,5 +31,6 @@ export class RegistrationComponent implements OnInit {
     (err)=>{
       console.log(err)
     })
+    this.router.navigateByUrl('login');
   }
 }
