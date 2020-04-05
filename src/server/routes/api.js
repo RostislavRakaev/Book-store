@@ -1,9 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+
+const db = 'mongodb+srv://mainless:12345678milk@cluster0-gddgz.mongodb.net/test?retryWrites=true&w=majority';
+
 const User = require('../models/USER');
 const Books = require('../models/Books');
-const db = 'mongodb+srv://mainless:12345678milk@cluster0-gddgz.mongodb.net/test?retryWrites=true&w=majority';
+const Author = require('../models/Author');
+
 
 mongoose.connect(db, err=>{
     if(err) {
@@ -18,29 +22,9 @@ mongoose.connect(db, err=>{
 router.get('/', (req, res)=>{
     res.send('From Api rounder');
 
-    async function newBook() {
-        let marvin = await new Books({
-            title: 'Marvin',
-            language: 'some'
-        });
-
-        marvin.save()
-        console.log('new Book added');
-
-        let user1 = await new User({
-            first_name: 'Alex',
-            books: marvin._id
-        });
-
-        user1.save(err=>{
-            if(err) {
-                console.log(err)
-            }
-        })
-    }
-
-    newBook();
 });
+
+////////Books/////////
 
 router.get('/books', (req,res)=>{
     Books.find((err, books)=>{
@@ -64,13 +48,21 @@ router.get('/books/:id', (req,res)=>{
     })
 })
 
-router.get('/register', (req, res)=>{
+router.get('/authors', (req, res)=>{
+    Author.find((err, authors)=>{
+        res.send(authors)
+    })
+})
+
+
+
+router.get('/users', (req, res)=>{
     User.find((err, user)=>{
         res.send(user);
     })
 })
 
-router.post('/register',  (req, res)=>{
+router.post('/users',  (req, res)=>{
     let userData =  req.body;
     let user =  new User(userData);
     user.save((error, registeredUser)=>{
@@ -82,6 +74,14 @@ router.post('/register',  (req, res)=>{
         }
     })
 })
+
+router.get('/:userId/books', (req, res)=>{
+    User.findById((err, user)=>{
+        res.send(user)
+    })
+})
+
+/////////// Login ////////////////
 
 router.post('/login', (req, res)=>{
     let userData = req.body;

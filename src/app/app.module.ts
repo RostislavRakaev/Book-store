@@ -13,6 +13,8 @@ import { LowToHighPipe } from './pipes/low-to-high.pipe';
 import { HighToLowPipe } from './pipes/high-to-low.pipe';
 import { BasketService } from './services/basket.service';
 import { LoginRegistrationModule } from './login-registration/login-registration.module';
+import { ProfileModule } from './profile/profile.module';
+import { AuthService } from './services/auth.service';
 
 
 
@@ -30,9 +32,10 @@ import { LoginRegistrationModule } from './login-registration/login-registration
     BrowserAnimationsModule,
     BooksModule,
     BasketModule,
-    LoginRegistrationModule
+    LoginRegistrationModule,
+    ProfileModule
   ],
-  providers: [BasketService],
+  providers: [BasketService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

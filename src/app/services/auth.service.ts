@@ -6,8 +6,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AuthService {
   
-  private _registeredUrl = 'http://localhost:3000/api/register';
+  private _registeredUrl = 'http://localhost:3000/api/users';
   private _loginUrl = 'http://localhost:3000/api/login';
+
+  token;
 
   constructor(private http:HttpClient) { }
 
@@ -17,5 +19,8 @@ export class AuthService {
   
   loginUser(user) {
     return this.http.post<any>(this._loginUrl, user);
+  }
+  public get logIn(): boolean {
+    return (localStorage.getItem('token') !== null);
   }
 }

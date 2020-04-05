@@ -3,31 +3,31 @@ const Schema = mongoose.Schema;
 
 const BookSchema = new Schema({
     title: {
-        type:String
+        type: String
     },
     description: {
-        type:String
+        type: String
     },
     language: {
-        type:String
+        type: String
     },
     author: {
         type: Schema.Types.ObjectId, ref: 'Author'
     },
     price: {
-        type:Number
+        type: Number
     },
     image_url: {
-        type:String
+        type: String
     },
     genre: {
-        type:String
+        type: String
     },
     published: {
-        type:Date
+        type: Date
     },
     quantity: {
-        type:Number
+        type: Number
     }
 });
 

@@ -25,7 +25,7 @@ const UserSchema = new Schema({
         default: false
     },
     books: 
-        [{ type: mongoose.Schema.Types.ObjectId, ref: 'books' }]
+        [{ type: Schema.Types.ObjectId, ref: 'books' }]
 });
 
 module.exports = User = mongoose.model('users', UserSchema);

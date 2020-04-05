@@ -4,6 +4,7 @@ import { BooksComponent } from './books/books.component';
 import { BasketComponent } from './basket/basket.component';
 import { LoginComponent } from './login-registration/login/login.component';
 import { RegistrationComponent } from './login-registration/registration/registration.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'basket', component: BasketComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegistrationComponent},
+  {path: 'profile', component: ProfileComponent},
   {path: '**', redirectTo: '' }
 ];
 
