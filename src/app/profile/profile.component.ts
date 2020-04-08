@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
+    this.redirectIfUserIsNotLoggedIn();
   }
 
+  redirectIfUserIsNotLoggedIn() {
+    if(!localStorage.getItem('token')) {
+      this.router.navigate(['login']);
+    }
+  }
 }

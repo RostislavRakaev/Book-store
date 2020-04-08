@@ -11,6 +11,7 @@
       <form>
         <input type="text" name="email" id="login" [(ngModel)]="loginUserData.email" class="fadeIn second"  placeholder="email" >
         <input type="text" name="password" id="password" class="fadeIn third"  placeholder="password" [(ngModel)]="loginUserData.password">
+        <!-- <div *ngIf="check == !loginUserData">Wrong Email or password</div> -->
         <input type="button" class="fadeIn fourth" value="Log In" (click)="loginUser()">
       </form>
   

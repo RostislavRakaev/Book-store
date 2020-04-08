@@ -42,7 +42,6 @@ export class BooksComponent implements OnInit, OnDestroy {
     this.basketDialogRef.afterClosed().subscribe(result=>{
       if(result !== undefined) {
         this.basketService.addToBasket(result);
-        console.log(this.basket)
       }
     })
   }

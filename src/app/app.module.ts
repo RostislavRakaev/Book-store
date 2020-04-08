@@ -15,6 +15,7 @@ import { BasketService } from './services/basket.service';
 import { LoginRegistrationModule } from './login-registration/login-registration.module';
 import { ProfileModule } from './profile/profile.module';
 import { AuthService } from './services/auth.service';
+import { AdminspanelModule } from './adminspanel/adminspanel.module';
 
 
 
@@ -33,7 +34,8 @@ import { AuthService } from './services/auth.service';
     BooksModule,
     BasketModule,
     LoginRegistrationModule,
-    ProfileModule
+    ProfileModule,
+    AdminspanelModule
   ],
   providers: [BasketService, AuthService],
   bootstrap: [AppComponent]

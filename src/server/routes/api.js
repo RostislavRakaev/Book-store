@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
 const db = 'mongodb+srv://mainless:12345678milk@cluster0-gddgz.mongodb.net/test?retryWrites=true&w=majority';
+const JWT_secret = 'some_secret_jwt'
 
 const User = require('../models/USER');
 const Books = require('../models/Books');
@@ -54,7 +56,7 @@ router.get('/authors', (req, res)=>{
     })
 })
 
-
+/////registration//////
 
 router.get('/users', (req, res)=>{
     User.find((err, user)=>{
@@ -65,12 +67,18 @@ router.get('/users', (req, res)=>{
 router.post('/users',  (req, res)=>{
     let userData =  req.body;
     let user =  new User(userData);
-    user.save((error, registeredUser)=>{
-        if(error) {
-            console.log(error);
+
+    User.findOne({email: userData.email}, (err, match)=>{
+        if(!match) {
+            user.save((err, registeredUser)=>{
+                if(err) {
+                    console.log(err)
+                }
+                res.status(200).send(registeredUser)
+            })
         }
         else {
-            res.status(200).send(registeredUser)
+            res.send({error: 'this email is already in use'})
         }
     })
 })
@@ -85,7 +93,7 @@ router.get('/:userId/books', (req, res)=>{
 
 router.post('/login', (req, res)=>{
     let userData = req.body;
-    
+    const expiration = '5m';
     User.findOne({email: userData.email}, (err, match)=>{
         if(err) {
             console.log(err);
@@ -95,11 +103,16 @@ router.post('/login', (req, res)=>{
                 res.status(401).send('Invalid email')
             }
             else {
+                let token = jwt.sign(userData, JWT_secret, { expiresIn: expiration })
                 if(match.password !== userData.password) {
                     res.status(401).send('Invalid password')
                 }
                 else {
-                    res.status(200).send(match)
+                    res.status(200).send({
+                        signed_user: match,
+                        token: token
+                       } 
+                    )
                 }
             }
         }
