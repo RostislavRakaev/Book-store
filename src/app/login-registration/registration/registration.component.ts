@@ -18,18 +18,27 @@ export class RegistrationComponent implements OnInit {
     isAdmin: false
   };
     
+  wrongEmail: boolean = false;
+
   constructor(private _auth:AuthService, private router: Router) { }
 
 
   ngOnInit(): void {
+    
   }
 
   registerUser() {
     this._auth.registerUser(this.registerUserData).subscribe((res)=>{
+      if(res !== null) {
+        this.router.navigateByUrl('login');
+      }
+      else {
+        this.wrongEmail = !this.wrongEmail;
+      }
     },
     (err)=>{
       console.log(err)
     })
-    this.router.navigateByUrl('login');
+
   }
 }

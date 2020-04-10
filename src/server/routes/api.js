@@ -11,7 +11,7 @@ const Books = require('../models/Books');
 const Author = require('../models/Author');
 
 
-mongoose.connect(db, err=>{
+mongoose.connect(db, { useFindAndModify: false }, err=>{
     if(err) {
         console.error('Error ' + err);
     }
@@ -65,30 +65,55 @@ router.get('/users', (req, res)=>{
 })
 
 router.post('/users',  (req, res)=>{
-    let userData =  req.body;
-    let user =  new User(userData);
-
-    User.findOne({email: userData.email}, (err, match)=>{
-        if(!match) {
-            user.save((err, registeredUser)=>{
-                if(err) {
-                    console.log(err)
-                }
-                res.status(200).send(registeredUser)
-            })
-        }
-        else {
-            res.send({error: 'this email is already in use'})
-        }
-    })
+    if(req.body) {
+        let userData = req.body;
+        let user = new User(userData);
+    
+        User.findOne({email: userData.email}, (error, match)=>{
+            if(!match) {
+                user.save((err, registeredUser)=>{
+                    if(err) {
+                        console.log(err)
+                    }
+                    res.status(200).send(registeredUser)
+                })
+            }
+            else {
+                return res.status(403).send(null)
+            }
+        })
+    }
+    else {
+        res.send({error: 'empty fields'})
+    }
 })
 
-router.get('/:userId/books', (req, res)=>{
-    User.findById((err, user)=>{
+router.get('/users/:id/books', (req, res)=>{
+    User.findById(req.params.id, (err, user)=>{
         res.send(user)
     })
 })
-
+router.post('/users/:id/books', (req, res)=>{
+    User.findById(req.params.id, (err, user)=>{
+        let purchasedBook = req.body.books;
+    for(let i = 0; i <= purchasedBook.length; i++) {
+            Books.findOneAndUpdate(
+                {title: purchasedBook[i]},
+                {$inc: {quantity: -1}},
+                (err, result)=>{
+                    if(err) {
+                        console.log(err);
+                    }
+                    else{
+                        console.log(result.quantity);
+                        user.books.push(result);
+                    }
+                }
+            )
+        
+    }
+})
+})
 /////////// Login ////////////////
 
 router.post('/login', (req, res)=>{

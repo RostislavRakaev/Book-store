@@ -21,6 +21,13 @@
         <div class="line"></div>
       </div>
     </label>
+
+    <div *ngIf="wrongEmail">
+      <p>
+        This email is already in use
+      </p>
+    </div>
+    
     <label>
       <p class="label-txt">ENTER YOUR PASSWORD</p>
       <input type="password" class="input" name="password" [(ngModel)]="registerUserData.password" required>
