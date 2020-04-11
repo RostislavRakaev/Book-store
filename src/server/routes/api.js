@@ -11,7 +11,7 @@ const Books = require('../models/Books');
 const Author = require('../models/Author');
 
 
-mongoose.connect(db, { useFindAndModify: false }, err=>{
+mongoose.connect(db, { useFindAndModify: false, useUnifiedTopology: true, useNewUrlParser: true }, err=>{
     if(err) {
         console.error('Error ' + err);
     }
@@ -94,25 +94,27 @@ router.get('/users/:id/books', (req, res)=>{
     })
 })
 router.post('/users/:id/books', (req, res)=>{
-    User.findById(req.params.id, (err, user)=>{
-        let purchasedBook = req.body.books;
-    for(let i = 0; i <= purchasedBook.length; i++) {
+    let purchasedBook = req.body.books;
+
+    for(let i = 0; i < purchasedBook.length; i++) {
+        
+        User.findByIdAndUpdate(req.params.id, {$push: {
+            books: purchasedBook[i]
+        }}, (err, user)=>{
+
+            //When cus buys a book it reduces the quantity
+
             Books.findOneAndUpdate(
-                {title: purchasedBook[i]},
+                {_id: purchasedBook[i]},
                 {$inc: {quantity: -1}},
+                {returnNewDocument: true},
                 (err, result)=>{
-                    if(err) {
-                        console.log(err);
-                    }
-                    else{
-                        console.log(result.quantity);
-                        user.books.push(result);
-                    }
+                    console.log(result)
                 }
             )
-        
+        })
     }
-})
+
 })
 /////////// Login ////////////////
 
