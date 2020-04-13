@@ -20,9 +20,9 @@ const UserSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    isAdmin: {
-        type: Boolean,
-        default: false
+    role: {
+        type: String,
+        default: 'user'
     },
     books: 
         [{ type: Schema.Types.ObjectId, ref: 'books' }]

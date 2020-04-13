@@ -8,10 +8,11 @@ import { ProfileComponent } from './profile/profile.component';
 import { AdminspanelComponent } from './adminspanel/adminspanel.component';
 import { NewbookComponent } from './adminspanel/newbook/newbook.component';
 import { CouponsComponent } from './adminspanel/coupons/coupons.component';
+import { AuthGuard } from './guards/auth.guard';
 
 
 const adminsRoutes:Routes = [
-  {path: 'newbook', component: NewbookComponent},
+  {path: 'booksmanager', component: NewbookComponent},
   {path: 'coupons', component: CouponsComponent}
 ]
 
@@ -20,13 +21,19 @@ const routes: Routes = [
   {path: 'basket', component: BasketComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegistrationComponent},
-  {path: 'profile', component: ProfileComponent},
-  {path: 'adminspanel', component: AdminspanelComponent, children: adminsRoutes},
+  {path: 'profile', component: ProfileComponent
+  
+  // , data: {title: 'profile', roles: ['user']}, canActivate: [AuthGuard]
+},
+  {path: 'adminspanel', component: AdminspanelComponent, children: adminsRoutes
+  // , data: {title: 'adminspannel', roles: ['admin']}
+},
   {path: '**', redirectTo: '' }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule { }

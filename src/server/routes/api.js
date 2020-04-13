@@ -98,18 +98,19 @@ router.post('/users/:id/books', (req, res)=>{
 
     for(let i = 0; i < purchasedBook.length; i++) {
         
+        //Adds book/s to cus
+
         User.findByIdAndUpdate(req.params.id, {$push: {
             books: purchasedBook[i]
         }}, (err, user)=>{
 
-            //When cus buys a book it reduces the quantity
+            //When cus buys a book it reduces the quantity of a purchased book
 
             Books.findOneAndUpdate(
                 {_id: purchasedBook[i]},
                 {$inc: {quantity: -1}},
                 {returnNewDocument: true},
                 (err, result)=>{
-                    console.log(result)
                 }
             )
         })
@@ -120,7 +121,6 @@ router.post('/users/:id/books', (req, res)=>{
 
 router.post('/login', (req, res)=>{
     let userData = req.body;
-    const expiration = '5m';
     User.findOne({email: userData.email}, (err, match)=>{
         if(err) {
             console.log(err);
@@ -130,13 +130,13 @@ router.post('/login', (req, res)=>{
                 res.status(401).send('Invalid email')
             }
             else {
-                let token = jwt.sign(userData, JWT_secret, { expiresIn: expiration })
+
                 if(match.password !== userData.password) {
                     res.status(401).send('Invalid password')
                 }
                 else {
+                    let token = jwt.sign({match}, JWT_secret, { expiresIn: 10012016 });
                     res.status(200).send({
-                        signed_user: match,
                         token: token
                        } 
                     )
