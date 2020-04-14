@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt')
 
 const db = 'mongodb+srv://mainless:12345678milk@cluster0-gddgz.mongodb.net/test?retryWrites=true&w=majority';
 const JWT_secret = 'some_secret_jwt'
@@ -64,19 +65,24 @@ router.get('/users', (req, res)=>{
     })
 })
 
+//Registration
+
 router.post('/users',  (req, res)=>{
     if(req.body) {
         let userData = req.body;
-        let user = new User(userData);
+
     
         User.findOne({email: userData.email}, (error, match)=>{
             if(!match) {
-                user.save((err, registeredUser)=>{
-                    if(err) {
-                        console.log(err)
-                    }
-                    res.status(200).send(registeredUser)
+                
+                bcrypt.hash(userData.password, 10, (err, hashedPassword)=>{
+                    userData.password = hashedPassword;
+                    let user = new User(userData);
+                    return user.save((err, registeredUser)=>{
+                        res.status(200).send(registeredUser)
+                    })
                 })
+
             }
             else {
                 return res.status(403).send(null)
@@ -122,27 +128,24 @@ router.post('/users/:id/books', (req, res)=>{
 router.post('/login', (req, res)=>{
     let userData = req.body;
     User.findOne({email: userData.email}, (err, match)=>{
-        if(err) {
-            console.log(err);
-        }
-        else {
+
             if(!match) {
                 res.status(401).send('Invalid email')
             }
             else {
-
-                if(match.password !== userData.password) {
-                    res.status(401).send('Invalid password')
-                }
-                else {
-                    let token = jwt.sign({match}, JWT_secret, { expiresIn: 10012016 });
-                    res.status(200).send({
-                        token: token
-                       } 
-                    )
-                }
+                bcrypt.compare(userData.password, match.password, (err, matchOfPasswords)=>{
+                    if(matchOfPasswords) { 
+                        let token = jwt.sign({match}, JWT_secret, { expiresIn: 10012016 });
+                        res.status(200).send({
+                            token: token
+                           } 
+                        )
+                    }
+                    else {
+                        res.status(401).send('Invalid password')
+                    }
+                })
             }
-        }
     })
 })
 

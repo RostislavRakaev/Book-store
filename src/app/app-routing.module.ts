@@ -6,14 +6,17 @@ import { LoginComponent } from './login-registration/login/login.component';
 import { RegistrationComponent } from './login-registration/registration/registration.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AdminspanelComponent } from './adminspanel/adminspanel.component';
-import { NewbookComponent } from './adminspanel/newbook/newbook.component';
 import { CouponsComponent } from './adminspanel/coupons/coupons.component';
 import { AuthGuard } from './guards/auth.guard';
+import { BookManagerComponent } from './adminspanel/book-manager/book-manager.component';
+import { UserListComponent } from './adminspanel/user-list/user-list.component';
 
 
 const adminsRoutes:Routes = [
-  {path: 'booksmanager', component: NewbookComponent},
-  {path: 'coupons', component: CouponsComponent}
+  {path: '', component: BookManagerComponent},
+  {path: 'coupons', component: CouponsComponent},
+  {path: 'user-list', component: UserListComponent},
+  {path: '**', redirectTo: ''}
 ]
 
 const routes: Routes = [
