@@ -135,7 +135,13 @@ router.post('/login', (req, res)=>{
             else {
                 bcrypt.compare(userData.password, match.password, (err, matchOfPasswords)=>{
                     if(matchOfPasswords) { 
-                        let token = jwt.sign({match}, JWT_secret, { expiresIn: 10012016 });
+                        let token = jwt.sign(
+                            {_id: match._id, 
+                            role: match.role, 
+                            name: `${match.first_name} ${match.last_name}`,
+                            email: match.email
+                        }
+                            , JWT_secret, { expiresIn: 10012016 });
                         res.status(200).send({
                             token: token
                            } 

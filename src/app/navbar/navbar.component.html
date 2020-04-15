@@ -12,13 +12,16 @@
           <a class="nav-link" routerLink="/profile" *ngIf="authService.logIn">Profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/login" *ngIf="!authService.logIn">Login</a>
+          <a class="nav-link" routerLink="/adminspanel" *ngIf="authService.LogInForAdmin">Admin's pannel</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/registration" *ngIf="!authService.logIn">Registration</a>
+          <a class="nav-link" routerLink="/login" *ngIf="!authService.logIn && !authService.LogInForAdmin">Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" (click)="logout()" *ngIf="authService.logIn">Logout</a>
+          <a class="nav-link" routerLink="/registration" *ngIf="!authService.logIn && !authService.LogInForAdmin">Registration</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="logout()" *ngIf="authService.logIn || authService.LogInForAdmin">Logout</a>
         </li>
       </ul>
     </div>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+
 
 @Component({
   selector: 'app-profile',
@@ -8,15 +10,10 @@ import { Router } from '@angular/router';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private router:Router) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.redirectIfUserIsNotLoggedIn();
   }
 
-  redirectIfUserIsNotLoggedIn() {
-    if(!localStorage.getItem('token')) {
-      this.router.navigate(['login']);
-    }
-  }
+
 }

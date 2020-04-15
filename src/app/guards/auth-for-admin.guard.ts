@@ -6,15 +6,17 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AuthForAdminGuard implements CanActivate {
 
   constructor(@Inject(AuthService) private _auth:AuthService, private router:Router) {}
   canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot, ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    
       if(localStorage.getItem('token')) {
         let role = this._auth.getDecoded().role;
-        if(role === 'user') {
+      
+        if(role === 'admin') {
           return true;
         }
         else {
@@ -22,8 +24,7 @@ export class AuthGuard implements CanActivate {
           return false;
         }
       }
-      
-      
+
   }
   
 }
