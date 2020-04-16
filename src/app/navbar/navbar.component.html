@@ -21,7 +21,7 @@
           <a class="nav-link" routerLink="/registration" *ngIf="!authService.logIn && !authService.LogInForAdmin">Registration</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" (click)="logout()" *ngIf="authService.logIn || authService.LogInForAdmin">Logout</a>
+          <a class="nav-link" (click)="logout()" *ngIf="authService.logIn || authService.LogInForAdmin" href="">Logout</a>
         </li>
       </ul>
     </div>

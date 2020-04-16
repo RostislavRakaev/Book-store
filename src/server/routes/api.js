@@ -95,12 +95,19 @@ router.post('/users',  (req, res)=>{
 })
 
 router.get('/users/:id/books', (req, res)=>{
-    User.findById(req.params.id, (err, user)=>{
-        res.send(user)
+    let usersId = req.params.id;
+    let usersBooks = [];
+    User.findById(usersId, (err, user)=>{
+        let books = user.books;
+        Books.find({"_id": books}, (err, bookInfo)=>{
+            res.send(bookInfo)
+        })
+        
     })
 })
+
 router.post('/users/:id/books', (req, res)=>{
-    let purchasedBook = req.body.books;
+    let purchasedBook = req.body;
 
     for(let i = 0; i < purchasedBook.length; i++) {
         

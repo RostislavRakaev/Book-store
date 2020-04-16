@@ -13,16 +13,15 @@ export class NavbarComponent implements OnInit {
 
   basket:Books[] = [];
 
-  constructor(private basketService:BasketService, public authService:AuthService, private router:Router) {
-    this.basket = this.basketService.showBasket();
-   }
+  constructor(private basketService:BasketService, public authService:AuthService, private router:Router) {}
 
   ngOnInit(): void {
+    this.basket = this.basketService.showBasket();
   }
 
   logout() {
     localStorage.removeItem('token');
-    this.router.navigate(['']);
+    this.basketService.clearTheBasket();
   }
  
 }

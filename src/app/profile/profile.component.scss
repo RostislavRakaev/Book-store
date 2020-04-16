@@ -1,0 +1,44 @@
+@mixin grid($cols, $margin) {
+    float: left;
+    margin-right: $margin;
+    margin-bottom: $margin;
+    width: ((100% - (($cols - 1) * $margin)) / $cols);
+
+    &:nth-child(#{$cols}n) {
+        margin-right: 0;
+    }
+}
+
+.basket {
+    float: right;
+}
+
+
+mat-form-field {
+    width: 100%;
+}
+
+
+mat-card { 
+    @include grid(5, 2%);
+    margin:2em; 
+    width: 20%; 
+
+    .modalbutton {
+        background-color: inherit;
+        margin: inherit;
+        font: inherit;
+        border: none;
+        color: inherit;
+        
+
+        .image_url {
+            height: 50vh;
+            width: 100%;
+        }
+    }
+
+
+
+}
+

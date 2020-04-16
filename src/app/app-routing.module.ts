@@ -11,6 +11,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { BookManagerComponent } from './adminspanel/book-manager/book-manager.component';
 import { UserListComponent } from './adminspanel/user-list/user-list.component';
 import { AuthForAdminGuard } from './guards/auth-for-admin.guard';
+import { BasketGuard } from './guards/basket.guard';
 
 
 const adminsRoutes:Routes = [
@@ -22,17 +23,17 @@ const adminsRoutes:Routes = [
 
 const routes: Routes = [
   {path: '', component: BooksComponent},
-  {path: 'basket', component: BasketComponent},
+  {path: 'basket', component: BasketComponent, canActivate: [BasketGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegistrationComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
-  {path: 'adminspanel', component: AdminspanelComponent, canActivate: [AuthForAdminGuard], children: adminsRoutes, },
+  {path: 'adminspanel', component: AdminspanelComponent, canActivate: [AuthForAdminGuard], children: adminsRoutes,},
   {path: '**', redirectTo: '' }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [AuthGuard, AuthForAdminGuard]
+  providers: [AuthGuard, AuthForAdminGuard, BasketGuard]
 })
 export class AppRoutingModule { }
