@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const MiniSearch = require('minisearch')
 
 const db = 'mongodb+srv://mainless:12345678milk@cluster0-gddgz.mongodb.net/test?retryWrites=true&w=majority';
 const JWT_secret = 'some_secret_jwt'
@@ -17,7 +18,7 @@ mongoose.connect(db, { useFindAndModify: false, useUnifiedTopology: true, useNew
         console.error('Error ' + err);
     }
     else {
-        console.log('connected to mongo db')
+        console.log('connected to mongo db');
     }
 })
 
@@ -30,19 +31,22 @@ router.get('/', (req, res)=>{
 ////////Books/////////
 
 router.get('/books', (req,res)=>{
-    Books.find((err, books)=>{
-        res.send(books)
-    });
+         Books.find((err, books)=>{
+             res.send(books);
+        });
+    
+
 });
 
 router.get('/books/:id', (req,res)=>{
+
     Books.findById(req.params.id, (err, books)=>{
         if(!books) {
             res.statusCode = 404;
             return res.send({ error: 'Not found' });
         }
         if (!err) {
-            return res.send({ status: 'OK', books:books });
+            return res.send({ status: 'OK', books: books });
         } else {
             res.statusCode = 500;
             log.error('Internal error(%d): %s',res.statusCode,err.message);
@@ -51,11 +55,21 @@ router.get('/books/:id', (req,res)=>{
     })
 })
 
-router.get('/authors', (req, res)=>{
-    Author.find((err, authors)=>{
-        res.send(authors)
+router.get('/search', (req, res)=>{
+    let title = req.query.title;
+
+    let miniSearch = new MiniSearch({
+        fields: ['title', 'text'], // fields to index for full-text search
+        storeFields: ['title', '_id'] // fields to return with search results
+      })
+
+     Books.find((err, match)=>{
+        miniSearch.addAll(match);
+        let results = miniSearch.search(title);
+        res.send(results);
     })
 })
+
 
 /////registration//////
 
@@ -96,38 +110,37 @@ router.post('/users',  (req, res)=>{
 
 router.get('/users/:id/books', (req, res)=>{
     let usersId = req.params.id;
-    let usersBooks = [];
-    User.findById(usersId, (err, user)=>{
-        let books = user.books;
-        Books.find({"_id": books}, (err, bookInfo)=>{
-            res.send(bookInfo)
-        })
-        
+    User.findById(usersId).populate('books').exec((err, response)=>{
+        res.send(response.books);
     })
 })
 
 router.post('/users/:id/books', (req, res)=>{
     let purchasedBook = req.body;
+    let userId = req.params.id;
 
-    for(let i = 0; i < purchasedBook.length; i++) {
         
         //Adds book/s to cus
 
-        User.findByIdAndUpdate(req.params.id, {$push: {
-            books: purchasedBook[i]
+        User.findByIdAndUpdate(userId, {$push: {
+            books: purchasedBook
         }}, (err, user)=>{
-
+            if(err) console.log(err)
             //When cus buys a book it reduces the quantity of a purchased book
 
-            Books.findOneAndUpdate(
-                {_id: purchasedBook[i]},
-                {$inc: {quantity: -1}},
+            Books.findByIdAndUpdate(
+                purchasedBook,
+                {$inc: {
+                quantity: -1,
+                purchased_copies: +1
+                }},
                 {returnNewDocument: true},
-                (err, result)=>{
+                (error, result)=>{
+                    if(!error) res.send('payment went through')
                 }
             )
         })
-    }
+
 
 })
 /////////// Login ////////////////
@@ -143,23 +156,69 @@ router.post('/login', (req, res)=>{
                 bcrypt.compare(userData.password, match.password, (err, matchOfPasswords)=>{
                     if(matchOfPasswords) { 
                         let token = jwt.sign(
-                            {_id: match._id, 
+                        {
+                            _id: match._id, 
                             role: match.role, 
                             name: `${match.first_name} ${match.last_name}`,
                             email: match.email
-                        }
-                            , JWT_secret, { expiresIn: 10012016 });
+                        },
+                        JWT_secret, { expiresIn: 10012016 });
                         res.status(200).send({
                             token: token
                            } 
                         )
                     }
                     else {
-                        res.status(401).send('Invalid password')
+                        res.status(401).send('Invalid password');
                     }
                 })
             }
     })
 })
+
+//Author
+
+    router.get('/authors', (req, res)=>{
+        Author.find((err, authors)=>{
+            res.send(authors)
+        })
+    })
+
+    //adds author
+
+    router.post('/authors', (req, res)=>{
+        let authorData = req.body;
+        let author = new Author(authorData);
+        author.save((err, addedAuthor)=>{
+            res.status(200).send(addedAuthor);
+        })
+    })
+
+    router.delete('/authors/:id', (req, res)=>{
+        let authorId = req.params.id;
+    })
+
+    router.get('/authors/:id/writtenbooks', (req, res)=>{
+        let authorId = req.params.id;
+
+        Author.findById(authorId).populate('written_books').exec((err, response)=>{
+            res.status(200).send(response.written_books);
+        })
+    })
+
+    //Adds written books to author
+
+    router.put('/authors/:id/writtenbooks', (req, res)=>{
+        let authorId = req.params.id;
+        let books = req.body.books;
+
+            Author.findByIdAndUpdate(authorId, {$push: {
+                written_books: books
+            }}, (err, response)=>{
+                res.status(200).send(response);
+            })
+
+            
+    })
 
 module.exports = router;

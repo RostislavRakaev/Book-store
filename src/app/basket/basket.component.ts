@@ -23,29 +23,23 @@ export class BasketComponent implements OnInit {
     this.basketService.removeFromBasketOnlyOneItem(item);
   }
 
-  ngOnInit(): void {  
-    this.redirectIfUserIsNotLoggedIn();
-    console.log(this.basket)
+  ngOnInit(): void { 
+     
   }
   ngAfterContentChecked() {
     this.totalPrice = this.basket.reduce(function(prevValue:number, item:Books):number{
       return prevValue += item.price;
     },0)
   }
-  
-  redirectIfUserIsNotLoggedIn() {
-    if(!localStorage.getItem('token')) {
-      this.router.navigate(['login']);
-    }
-  }
 
   purchase():void {
-    let userId = this._auth.getDecoded()._id;
-    this.bookService.purchaseBook(userId, this.basket).subscribe(res=>{
-      if(res) {
-        this.router.navigate(['basket-success']); 
-      }
-    });
+    if(this.basket.length > 0) {
+      let userId = this._auth.getDecoded()._id;
+      this.bookService.purchaseBook(userId, this.basket).subscribe(res=>{
+          console.log(res);
+          this.router.navigate(['basket-success']);
+      });
+    }
     
   }
 

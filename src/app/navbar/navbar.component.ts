@@ -21,7 +21,7 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     localStorage.removeItem('token');
-    this.basketService.clearTheBasket();
+    this.router.navigate(['']);
   }
  
 }

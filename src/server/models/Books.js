@@ -12,7 +12,7 @@ const BookSchema = new Schema({
         type: String
     },
     author: [{
-        type: Schema.Types.ObjectId, ref: 'Author'
+        type: Schema.Types.ObjectId, ref: 'authors'
     }],
     price: {
         type: Number
@@ -28,6 +28,10 @@ const BookSchema = new Schema({
     },
     quantity: {
         type: Number
+    },
+    purchased_copies: {
+        type: Number,
+        default: 0
     }
 });
 

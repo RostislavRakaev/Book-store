@@ -24,6 +24,10 @@ export class AuthForAdminGuard implements CanActivate {
           return false;
         }
       }
+      else {
+        this.router.navigate(['']);
+        return false;
+      }
 
   }
   

@@ -6,10 +6,14 @@ const AuthorSchema = new Schema({
         type: String,
         required: true
     },
-    DOB: {
+    dob: {
         type: Date
     },
-    writtenBooks: [{
+    country: {
+        type: String,
+        required: true
+    },
+    written_books: [{
         type: Schema.Types.ObjectId, ref: 'books'
     }]
 })

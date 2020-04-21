@@ -7,7 +7,5 @@
 <mat-card-actions>
     <button (click)="addToBasket(book)">Buy</button>
 </mat-card-actions>
-    <div *ngIf="book.quantity <= 2" class="quantity">
-        Hurry up, only {{book.quantity}} left
-    </div>
+
 <mat-card-footer>Price: {{book.price}}$</mat-card-footer>

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { BasketService } from '../services/basket.service'
 import { BookService } from '../services/book.service';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -13,7 +12,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { OverlayModule } from "@angular/cdk/overlay";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms'
+import { FormsModule} from '@angular/forms'
 
 
 
@@ -34,7 +33,7 @@ import { FormsModule } from '@angular/forms'
   ],
   exports: [
   ],
-  providers: [BasketService, BookService],
+  providers: [BookService],
   bootstrap: [BooksComponent]
 })
 export class BooksModule { }

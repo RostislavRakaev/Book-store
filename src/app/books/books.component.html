@@ -1,3 +1,18 @@
+<div class="form-group mb-4">
+    <input type="search" placeholder="What're you searching for?"
+     class="form-control border-primary"
+     (keyup)="searchBooks$.next($event.target.value)">
+  </div>
+
+
+<ul *ngIf="books$">
+  <li *ngFor="let book of books$ | slice:0:9">
+    <a href="{{ book.title }}" target="_blank">
+      {{ book.title }}
+    </a>
+  </li>
+</ul>
+
 <mat-form-field>
   <mat-label>Sort by</mat-label>
   <mat-select>
@@ -17,7 +32,10 @@
         <mat-card-title>{{book.title}}</mat-card-title>
         <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
         <img class="image_url" mat-card-md-image src="{{book.image_url}}">
-    
+        <mat-card-footer>Price: {{book.price}}</mat-card-footer>
+        <!-- <div *ngIf="book.quantity <= 2" class="quantity">
+          Hurry up, only {{book.quantity}} left
+      </div> -->
     </button>
     </mat-card>
     

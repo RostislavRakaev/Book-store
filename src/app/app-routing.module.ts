@@ -12,6 +12,7 @@ import { BookManagerComponent } from './adminspanel/book-manager/book-manager.co
 import { UserListComponent } from './adminspanel/user-list/user-list.component';
 import { AuthForAdminGuard } from './guards/auth-for-admin.guard';
 import { BasketGuard } from './guards/basket.guard';
+import { BasketSuccessComponent } from './basket/basket-success/basket-success.component';
 
 
 const adminsRoutes:Routes = [
@@ -24,6 +25,7 @@ const adminsRoutes:Routes = [
 const routes: Routes = [
   {path: '', component: BooksComponent},
   {path: 'basket', component: BasketComponent, canActivate: [BasketGuard]},
+  {path: 'basket-sucess', component: BasketSuccessComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegistrationComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},

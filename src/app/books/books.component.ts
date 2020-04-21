@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, fromEvent, from, Subject } from 'rxjs';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { ModalWindowComponent } from './modal-window/modal-window.component';
 import { Books } from './book';
-import { BasketService } from '../services/basket.service';
 import { BookService } from '../services/book.service';
+import { SearchService } from '../services/search.service';
 
 
 @Component({
@@ -17,16 +17,17 @@ import { BookService } from '../services/book.service';
 export class BooksComponent implements OnInit, OnDestroy {
   url:string = 'http://localhost:3000/api/books'; 
 
-  books:Observable<Books[]>;
-  subscriptionForBookApi:Subscription;
 
-  basket:Books[] = [];
+  books:Observable<Books[]>;
+
+  searchBooks$ = new Subject<string>();
+  books$;
+  subscriptionForBookApi:Subscription;
+  subscriptionForSearcher: Subscription;
+
   basketDialogRef:MatDialogRef<ModalWindowComponent>;
   
-
-  constructor(private bookService:BookService, public dialog: MatDialog, private basketService:BasketService) {
-    this.basket = this.basketService.showBasket();
-   }
+  constructor(private bookService: BookService, public dialog: MatDialog, private searchService: SearchService) {}
 
   getBooksApi() {
     this.subscriptionForBookApi = this.bookService.getBooksApi().subscribe((data:any)=>{
@@ -38,19 +39,21 @@ export class BooksComponent implements OnInit, OnDestroy {
     this.basketDialogRef = this.dialog.open(ModalWindowComponent, {
       data: book
     });
-    this.basketDialogRef.afterClosed().subscribe(result=>{
-      if(result !== undefined) {
-        this.basketService.addToBasket(result);
-      }
+  }
+  bookSearcher() {
+    this.subscriptionForSearcher = this.searchService.search(this.searchBooks$).subscribe(response=>{
+      this.books$ = response;
     })
   }
 
   ngOnInit() {
     this.getBooksApi();
+    this.bookSearcher();
   }
 
   ngOnDestroy() {
     this.subscriptionForBookApi.unsubscribe();
+    this.subscriptionForSearcher.unsubscribe();
   }
 
 
