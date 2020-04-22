@@ -1,1 +1,81 @@
-<p>book-manager works!</p>
+<form>
+    
+    <label>
+      <p class="label-txt">Title</p>
+      <input type="text" class="input" name="title" [(ngModel)]="newBook.title" required>
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+    </label>
+    <label>
+        <p class="label-txt">Genre</p>
+        <input type="text" class="input" name="genre" [(ngModel)]="newBook.genre" required>
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+    <label>
+      <p class="label-txt">Author</p>
+      <input type="text" class="input" name="author" [(ngModel)]="authorsId" (keyup)="searchAuthors$.next($event.target.value)" required>
+
+      <div class="line-box">
+        <div class="line"></div>
+
+        <ul *ngIf="authors$">
+          <li *ngFor="let author of authors$ | slice:0:9">
+            <button (click)="chosenAuthor(author)">
+              {{ author.name }}
+          </button>
+          </li>
+        </ul>
+
+      </div>
+    </label>
+
+    <label>
+      <p class="label-txt">Language</p>
+      <input type="text" class="input" name="language" [(ngModel)]="newBook.language" required>
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+    </label>
+    
+    <label>
+      <p class="label-txt">Description</p>
+      <input type="password" class="input" name="description" [(ngModel)]="newBook.description" required>
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+    </label>
+
+    <label>
+        <p class="label-txt">Image's url</p>
+        <input type="text" class="input" name="image_url" [(ngModel)]="newBook.image_url" required>
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+
+      <div *ngIf="newBook.image_url">
+        <img [src]="newBook.image_url" alt="">
+      </div>
+
+    <label>
+      <p class="label-txt">Price</p>
+      <input type="number" class="input" name="price" [(ngModel)]="newBook.price" required>
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+    </label>
+
+    <label>
+        <p class="label-txt">Quantity</p>
+        <input type="number" class="input" name="quantity" [(ngModel)]="newBook.quantity" required>
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+
+    <button type="button" (click)="saveBook()">Save</button>
+
+  </form>

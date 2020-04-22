@@ -16,9 +16,9 @@ import { BasketSuccessComponent } from './basket/basket-success/basket-success.c
 
 
 const adminsRoutes:Routes = [
-  {path: '', component: BookManagerComponent},
-  {path: 'coupons', component: CouponsComponent},
-  {path: 'user-list', component: UserListComponent},
+  {path: '', component: BookManagerComponent, outlet: 'admin'},
+  {path: 'coupons', component: CouponsComponent, outlet: 'admin'},
+  {path: 'user-list', component: UserListComponent, outlet: 'admin'},
   {path: '**', redirectTo: ''}
 ]
 
@@ -29,7 +29,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegistrationComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
-  {path: 'adminspanel', component: AdminspanelComponent, canActivate: [AuthForAdminGuard], children: adminsRoutes,},
+  {path: 'adminspanel', component: AdminspanelComponent, canActivate: [AuthForAdminGuard], children: adminsRoutes },
   {path: '**', redirectTo: '' }
 ];
 

@@ -31,12 +31,25 @@ router.get('/', (req, res)=>{
 ////////Books/////////
 
 router.get('/books', (req,res)=>{
-         Books.find((err, books)=>{
-             res.send(books);
-        });
+         Books.find().populate('author').exec((err, books)=>{
+            res.send(books);
+         });
     
 
 });
+
+router.post('/books', async (req, res)=>{
+    let book = req.body.newBook;
+    let authorId = book.author;
+    let newBook = new Books(book);
+
+    Author.findByIdAndUpdate(authorId, {$push:{
+        written_books: newBook._id
+    }}, (err, author)=>{})
+    newBook.save((err, done)=>{
+        res.status(200).send(done);
+    });
+})
 
 router.get('/books/:id', (req,res)=>{
 
@@ -56,18 +69,33 @@ router.get('/books/:id', (req,res)=>{
 })
 
 router.get('/search', (req, res)=>{
+
+     function searcher(value, db, index) {
+        let miniSearch = new MiniSearch({
+            fields: [index, 'text'], // fields to index for full-text search
+            storeFields: [index, '_id'] // fields to return with search results
+          });
+
+        db.find((err, match)=>{
+            miniSearch.addAll(match);
+            let results = miniSearch.search(value);
+            res.send(results);
+          })
+    }
+
     let title = req.query.title;
+    let author = req.query.author;
 
-    let miniSearch = new MiniSearch({
-        fields: ['title', 'text'], // fields to index for full-text search
-        storeFields: ['title', '_id'] // fields to return with search results
-      })
+    if(title) {
+        searcher(title, Books, 'title');
 
-     Books.find((err, match)=>{
-        miniSearch.addAll(match);
-        let results = miniSearch.search(title);
-        res.send(results);
-    })
+    }
+    else if(author) {
+        searcher(author, Author, 'name');
+    }
+
+
+
 })
 
 

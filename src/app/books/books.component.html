@@ -19,7 +19,7 @@
     <mat-option>None</mat-option>
     <mat-option value="option1">What's new</mat-option>
     <mat-option value="option2">Price low to high</mat-option>
-    <mat-option value="option3">Price hight to low</mat-option>
+    <mat-option value="option3">Price high to low</mat-option>
   </mat-select>
 </mat-form-field>
 
@@ -30,7 +30,7 @@
     <button class="modalbutton" mat-button (click)="openModal(book)" >
     
         <mat-card-title>{{book.title}}</mat-card-title>
-        <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
+        <mat-card-subtitle>{{book.author.name}}</mat-card-subtitle>
         <img class="image_url" mat-card-md-image src="{{book.image_url}}">
         <mat-card-footer>Price: {{book.price}}</mat-card-footer>
         <!-- <div *ngIf="book.quantity <= 2" class="quantity">

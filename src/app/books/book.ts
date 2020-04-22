@@ -6,7 +6,7 @@ export interface Books{
     price: number;
     image_url: string;
     genre: string;
-    published: number;
+    published?: number;
     quantity?: number;
   }
   

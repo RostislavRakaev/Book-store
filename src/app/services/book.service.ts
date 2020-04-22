@@ -23,4 +23,8 @@ export class BookService {
     return this.http.post<Books[]>(`${this.url}/users/${userId}/books`, bookId);
   }
 
+  addBook(book:Books): Observable<Books> {
+    return this.http.post<Books>(`${this.url}/books`, book);
+  }
+
 }

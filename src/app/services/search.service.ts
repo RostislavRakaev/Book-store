@@ -11,7 +11,6 @@ import { Books } from '../books/book';
 export class SearchService {
 
   baseUrl: string = 'http://localhost:3000/api/search';
-  queryUrl: string = '?title=';
 
   constructor(private http: HttpClient) { }
 
@@ -25,6 +24,19 @@ export class SearchService {
   }
 
   searchEntries(title) {
-    return this.http.get(this.baseUrl + this.queryUrl + title);
+    return this.http.get(this.baseUrl + '?title=' + title);
+  }
+
+  searchAuthor(inputs) {
+    return inputs
+      .pipe(
+      debounceTime(400),
+      distinctUntilChanged(),
+      switchMap(input=>this.authorSearcher(input))
+      )
+}
+
+  authorSearcher(name) {
+    return this.http.get(this.baseUrl + '?author=' + name );
   }
 }
