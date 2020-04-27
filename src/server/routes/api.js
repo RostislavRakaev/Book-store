@@ -25,7 +25,6 @@ mongoose.connect(db, { useFindAndModify: false, useUnifiedTopology: true, useNew
 
 router.get('/', (req, res)=>{
     res.send('From Api rounder');
-
 });
 
 ////////Books/////////
@@ -34,39 +33,46 @@ router.get('/books', (req,res)=>{
          Books.find().populate('author').exec((err, books)=>{
             res.send(books);
          });
-    
-
 });
 
-router.post('/books', async (req, res)=>{
-    let book = req.body.newBook;
-    let authorId = book.author;
-    let newBook = new Books(book);
+router.post('/books', (req, res)=>{
+    let book = req.body;
 
-    Author.findByIdAndUpdate(authorId, {$push:{
-        written_books: newBook._id
-    }}, (err, author)=>{})
-    newBook.save((err, done)=>{
-        res.status(200).send(done);
-    });
-})
+    Author.findOne({name: book.author}, (err, author)=>{
+        book.author = author._id;
+        let newBook = new Books(book);
 
-router.get('/books/:id', (req,res)=>{
+        Author.findByIdAndUpdate(book.author, {$push: {
+            written_books: newBook._id
+        }}, (err, done)=>{})
 
-    Books.findById(req.params.id, (err, books)=>{
-        if(!books) {
-            res.statusCode = 404;
-            return res.send({ error: 'Not found' });
-        }
-        if (!err) {
-            return res.send({ status: 'OK', books: books });
-        } else {
-            res.statusCode = 500;
-            log.error('Internal error(%d): %s',res.statusCode,err.message);
-            return res.send({ error: 'Server error' });
-        }
+        newBook.save((err, done)=>{
+            res.status(200).send(done);
+        })
+    })
+
+}
+)
+
+router.put('/books/:id', (req, res)=>{
+    let bookId = req.params.id;
+    let book = req.body;
+
+    Author.findOne({name: book.author}, (err, author)=>{
+        book.author = author._id
+        Books.updateOne({_id: bookId}, book, (err, body)=>{
+            if(err){console.log(err)}
+            else {res.status(200).send(body);}
+        })
     })
 })
+
+router.delete('/books/:id', (req, res)=>{
+    let bookId = req.params.id;
+    Books.findByIdAndDelete(bookId, (err, done)=>{})
+})
+
+
 
 router.get('/search', (req, res)=>{
 

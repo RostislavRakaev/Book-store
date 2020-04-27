@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+
 export interface Books{
     title: string;
     description: string;
@@ -6,8 +8,11 @@ export interface Books{
     price: number;
     image_url: string;
     genre: string;
+    quantity: number;
+    purchased_copies?: number;
     published?: number;
-    quantity?: number;
+    _id?:number;
+    isNew?:boolean;
   }
   
   

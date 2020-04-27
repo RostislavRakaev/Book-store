@@ -31,7 +31,6 @@ export class BooksComponent implements OnInit, OnDestroy {
 
   getBooksApi() {
     this.subscriptionForBookApi = this.bookService.getBooksApi().subscribe((data:any)=>{
-      console.log(data)
       return this.books = data;
     })
   }

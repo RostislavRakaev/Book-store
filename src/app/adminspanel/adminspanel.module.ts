@@ -6,15 +6,20 @@ import { UserListComponent } from './user-list/user-list.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { BookManagerComponent } from './book-manager/book-manager.component';
 import { FormsModule } from '@angular/forms';
+import { BookListComponent } from './book-manager/book-list/book-list.component';
+import { BookEditComponent } from './book-manager/book-edit/book-edit.component';
+import { BookService } from '../services/book.service';
+import { SearchService } from '../services/search.service';
 
 
 @NgModule({
-  declarations: [AdminspanelComponent, CouponsComponent, UserListComponent, BookManagerComponent],
+  declarations: [AdminspanelComponent, CouponsComponent, UserListComponent, BookManagerComponent, BookListComponent, BookEditComponent],
   imports: [
     CommonModule,
     AppRoutingModule,
     FormsModule
   ],
+  providers: [BookService, SearchService],
   bootstrap: [AdminspanelComponent]
 })
 export class AdminspanelModule { }

@@ -1,0 +1,29 @@
+<a class="btn" [routerLink]="['edit']">Add a new Book</a>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Author</th>
+        <th scope="col">Price</th>
+        <th scope="col">Left</th>
+        <th scope="col">Purchased</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let book of books | slice:0:10">
+        <th scope="row">{{book.title}}</th>
+        <td>{{book.author.name}}</td>
+        <td>{{book.price}}</td>
+        <td>{{book.quantity}}</td>
+        <td>{{book.purchased_copies}}</td>
+        <td>
+            <button class="btn btn-success" (click)="editBook(book)">Change</button>
+        </td>
+        <td>
+            <button class="btn btn-danger" (click)="deleteBook(book._id)">X</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
