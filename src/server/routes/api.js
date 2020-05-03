@@ -30,45 +30,78 @@ router.get('/', (req, res)=>{
 ////////Books/////////
 
 router.get('/books', (req,res)=>{
-         Books.find().populate('author').exec((err, books)=>{
+    Books.find().populate('author').exec((err, books)=>{
             res.send(books);
          });
+    Books.watch
 });
 
 router.post('/books', (req, res)=>{
     let book = req.body;
+    
+    let authors = [];
+    for(let author of book.author) {
+        authors.push(author._id)
+    }
+    book.author = authors;
 
-    Author.findOne({name: book.author}, (err, author)=>{
-        book.author = author._id;
-        let newBook = new Books(book);
+    let newBook = new Books(book);
 
-        Author.findByIdAndUpdate(book.author, {$push: {
-            written_books: newBook._id
-        }}, (err, done)=>{})
+    Author.updateMany({_id: newBook.author}, {$push: {
+        written_books: newBook._id
+    }}, (err, done)=>{
+        if(err) res.status(400).send(err);
+    })
 
-        newBook.save((err, done)=>{
-            res.status(200).send(done);
-        })
+    newBook.save((err, done)=>{
+        if(err) res.status(400).send(err);
+        res.status(200).send(done);
     })
 
 }
 )
 
-router.put('/books/:id', (req, res)=>{
-    let bookId = req.params.id;
-    let book = req.body;
+router.put('/books/:id', async (req, res)=>{
+    let updatedBookId = req.params.id;
+    let updatedBook = req.body;    
+    
+    updatedAuthors = [];
+    for(let author of updatedBook.author) {
+        updatedAuthors.push(author._id);
+    }
+    updatedBook.author = updatedAuthors;
+    
+    await Books.findById(updatedBook, async (err, oldBook)=>{
 
-    Author.findOne({name: book.author}, (err, author)=>{
-        book.author = author._id
-        Books.updateOne({_id: bookId}, book, (err, body)=>{
-            if(err){console.log(err)}
-            else {res.status(200).send(body);}
+        await Author.updateMany({_id: oldBook.author}, {$pull: {
+            written_books: oldBook._id
+        }}, (err, done)=>{
+            if(err) res.status(404).send(err);
         })
+
+        Author.updateMany({_id: updatedBook.author}, {$push: {
+            written_books: updatedBookId
+        }}, (err, done)=>{
+            if(err) res.status(404).send(err);
+        })
+
+    }) 
+
+    Books.updateOne({_id: updatedBookId}, updatedBook, (err, done)=>{
+        if(err) res.status(404).send(err);
+        res.status(200).send(done);
     })
+
+
 })
 
 router.delete('/books/:id', (req, res)=>{
     let bookId = req.params.id;
+    Author.updateMany({written_books: bookId}, {$pull: {
+        written_books: bookId
+    }}, (err, author)=>{
+        console.log(author);
+    })
     Books.findByIdAndDelete(bookId, (err, done)=>{})
 })
 
@@ -91,6 +124,7 @@ router.get('/search', (req, res)=>{
 
     let title = req.query.title;
     let author = req.query.author;
+    let book = req.query.book;
 
     if(title) {
         searcher(title, Books, 'title');
@@ -98,6 +132,9 @@ router.get('/search', (req, res)=>{
     }
     else if(author) {
         searcher(author, Author, 'name');
+    }
+    else if(book) {
+        searcher(book, Books, 'title');
     }
 
 
@@ -213,8 +250,8 @@ router.post('/login', (req, res)=>{
 //Author
 
     router.get('/authors', (req, res)=>{
-        Author.find((err, authors)=>{
-            res.send(authors)
+        Author.find().populate('written_books').exec((err, author)=>{
+            res.status(200).send(author);
         })
     })
 
@@ -223,13 +260,70 @@ router.post('/login', (req, res)=>{
     router.post('/authors', (req, res)=>{
         let authorData = req.body;
         let author = new Author(authorData);
+        
+            Books.find({_id: author.written_books}, (err, books)=>{
+                for(let book of books) {
+                    if(!book.author.includes(author._id)) {
+                        Books.findByIdAndUpdate(book._id, {$push: {
+                            author: author._id
+                        }}, (err, result)=>{
+                        })
+                    }
+                }
+            })
+        
         author.save((err, addedAuthor)=>{
+            if(err) console.log(err);
             res.status(200).send(addedAuthor);
         })
     })
 
+    router.put('/authors/:id', async (req, res)=>{
+        let updatedAuthorId = req.params.id;
+        let updatedAuthor = req.body;
+
+        let written_books = [];
+        for(let book of updatedAuthor.written_books) {
+            written_books.push(book._id)
+        }
+        updatedAuthor.written_books = written_books;
+
+        await Author.findById({_id: updatedAuthorId}, async (err, oldAuthor)=>{
+            
+            await Books.updateMany({author: oldAuthor._id}, {$pull: {
+                author: oldAuthor._id
+            }}, (err, done)=>{
+                if(err) res.status(400).send(err);
+            })
+            
+            Books.updateMany({_id: updatedAuthor.written_books}, {$push: {
+                author: updatedAuthorId
+            }},(err, done)=>{
+                if(err) res.status(400).send(err);
+            })
+
+        })
+
+        Author.updateOne({_id: updatedAuthorId}, updatedAuthor, (err, done)=>{
+            if(err) res.status(400).send(err);
+            res.status(200).send(done);
+        })
+})
+
+
+
+
+
     router.delete('/authors/:id', (req, res)=>{
         let authorId = req.params.id;
+        Books.updateMany({author: authorId}, {$pull: {
+            author: authorId
+        }}, (err, done)=>{
+            if(err) console.log(err);
+        })
+        Author.findByIdAndRemove(authorId, (err, done)=>{
+            res.status(200).send(done);
+        })
     })
 
     router.get('/authors/:id/writtenbooks', (req, res)=>{

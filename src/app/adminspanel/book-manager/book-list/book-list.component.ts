@@ -33,7 +33,8 @@ export class BookListComponent implements OnInit, OnDestroy {
   }
 
   editBook(book):void {
-    book.author = book.author.name;
+
+    // book.author = book.author.name;
     book.isNew = false;
     let JSONbook = JSON.stringify(book);
     this.router.navigate(['adminspanel/book-manager/edit'], {queryParams: { JSONbook }});

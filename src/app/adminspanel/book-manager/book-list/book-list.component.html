@@ -13,7 +13,7 @@
     <tbody>
       <tr *ngFor="let book of books | slice:0:10">
         <th scope="row">{{book.title}}</th>
-        <td>{{book.author.name}}</td>
+        <td *ngFor="let author of book.author">{{author.name}}</td>
         <td>{{book.price}}</td>
         <td>{{book.quantity}}</td>
         <td>{{book.purchased_copies}}</td>

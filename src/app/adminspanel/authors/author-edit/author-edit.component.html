@@ -1,0 +1,62 @@
+<form>
+    
+    <label>
+      <p class="label-txt">Name</p>
+      <input type="text" class="input" name="name" [(ngModel)]="newAuthor.name" required>
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+    </label>
+    <label>
+        <p class="label-txt">Country</p>
+        <input type="text" class="input" name="country" [(ngModel)]="newAuthor.country" required>
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+
+      <label>
+        <p class="label-txt">Date of birth</p>
+        <input type="text" class="input" name="dob" [(ngModel)]="newAuthor.dob" required>
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+
+      <label>
+        <p class="label-txt">Books</p>
+        <input type="text" class="input" name="books" (keyup)="searchBooks$.next($event.target.value)" required>
+  
+        <div class="line-box">
+          <div class="line"></div>
+  
+          <ul *ngIf="books$">
+            <li *ngFor="let book of books$ | slice:0:9">
+              <button (click)="addBook(book)">
+                {{ book.title }}
+            </button>
+            </li>
+          </ul>
+  
+        </div>
+      </label>
+  
+      <div id="written_books" *ngFor="let book of newAuthor.written_books">
+          <div>{{book.title}}
+              <button class="btn btn-danger" (click)="removeBook(book)">X</button>
+          </div>
+      </div>
+
+      <label>
+        <p class="label-txt">Biography</p>
+        <textarea class="input" name="biography" [(ngModel)]="newAuthor.bio" required></textarea>
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+
+    <button type="button" (click)="saveAuthor()">Save</button>
+
+  </form>
+
+ 

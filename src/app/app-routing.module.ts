@@ -15,6 +15,10 @@ import { BasketGuard } from './guards/basket.guard';
 import { BasketSuccessComponent } from './basket/basket-success/basket-success.component';
 import { BookEditComponent } from './adminspanel/book-manager/book-edit/book-edit.component';
 import { BookListComponent } from './adminspanel/book-manager/book-list/book-list.component';
+import { AuthorsComponent } from './adminspanel/authors/authors.component';
+import { AuthorListComponent } from './adminspanel/authors/author-list/author-list.component';
+import { AuthorEditComponent } from './adminspanel/authors/author-edit/author-edit.component';
+
 
 
 const adminBookRoutes:Routes = [
@@ -22,11 +26,16 @@ const adminBookRoutes:Routes = [
   {path: 'edit', component: BookEditComponent},
   {path: '**', redirectTo: ''}
 ]
-
+const authorsRoutes:Routes = [
+  {path: '', component: AuthorListComponent},
+  {path: 'edit', component: AuthorEditComponent},
+  {path: '**', redirectTo: ''}
+]
 const adminsRoutes:Routes = [
   {path: '', component: UserListComponent},
   {path: 'coupons', component: CouponsComponent},
   {path: 'book-manager', component: BookManagerComponent, children: adminBookRoutes},
+  {path: 'authors', component: AuthorsComponent, children: authorsRoutes},
   {path: '**', redirectTo: ''}
 ]
 

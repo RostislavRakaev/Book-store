@@ -15,13 +15,13 @@ import { SearchService } from '../services/search.service';
 
 
 export class BooksComponent implements OnInit, OnDestroy {
+
   url:string = 'http://localhost:3000/api/books'; 
-
-
   books:Observable<Books[]>;
 
   searchBooks$ = new Subject<string>();
   books$;
+  
   subscriptionForBookApi:Subscription;
   subscriptionForSearcher: Subscription;
 
@@ -29,19 +29,19 @@ export class BooksComponent implements OnInit, OnDestroy {
   
   constructor(private bookService: BookService, public dialog: MatDialog, private searchService: SearchService) {}
 
-  getBooksApi() {
+  getBooksApi():void {
     this.subscriptionForBookApi = this.bookService.getBooksApi().subscribe((data:any)=>{
-      return this.books = data;
+      this.books = data;
     })
   }
 
-  openModal(book:Books[]) {
+  openModal(book:Books[]):void {
     this.basketDialogRef = this.dialog.open(ModalWindowComponent, {
       data: book
     });
   }
-  bookSearcher() {
-    this.subscriptionForSearcher = this.searchService.search(this.searchBooks$).subscribe(response=>{
+  bookSearcher():void {
+    this.subscriptionForSearcher = this.searchService.searchBook(this.searchBooks$).subscribe(response=>{
       this.books$ = response;
     })
   }

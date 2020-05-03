@@ -10,16 +10,21 @@ import { BookListComponent } from './book-manager/book-list/book-list.component'
 import { BookEditComponent } from './book-manager/book-edit/book-edit.component';
 import { BookService } from '../services/book.service';
 import { SearchService } from '../services/search.service';
+import { AuthorsComponent } from './authors/authors.component';
+import { AuthorListComponent } from './authors/author-list/author-list.component';
+import { AuthorEditComponent } from './authors/author-edit/author-edit.component';
+import { AuthorService } from '../services/author.service';
+
 
 
 @NgModule({
-  declarations: [AdminspanelComponent, CouponsComponent, UserListComponent, BookManagerComponent, BookListComponent, BookEditComponent],
+  declarations: [AdminspanelComponent, CouponsComponent, UserListComponent, BookManagerComponent, BookListComponent, BookEditComponent, AuthorsComponent, AuthorListComponent, AuthorEditComponent],
   imports: [
     CommonModule,
     AppRoutingModule,
     FormsModule
   ],
-  providers: [BookService, SearchService],
+  providers: [BookService, SearchService, AuthorService],
   bootstrap: [AdminspanelComponent]
 })
 export class AdminspanelModule { }

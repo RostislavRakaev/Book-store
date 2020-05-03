@@ -16,7 +16,7 @@
       </label>
     <label>
       <p class="label-txt">Author</p>
-      <input type="text" class="input" name="author" [(ngModel)]="newBook.author" (keyup)="searchAuthors$.next($event.target.value)" required>
+      <input type="text" class="input" name="author" (keyup)="searchAuthors$.next($event.target.value)" required>
 
       <div class="line-box">
         <div class="line"></div>
@@ -31,6 +31,12 @@
 
       </div>
     </label>
+
+    <div id="authors" *ngFor="let author of newBook.author">
+      <div>{{author.name}}
+        <button class="btn btn-danger" (click)="removeAuthor(author)">X</button>
+      </div>
+    </div>
 
     <label>
       <p class="label-txt">Language</p>

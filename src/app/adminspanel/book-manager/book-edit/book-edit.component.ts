@@ -21,7 +21,7 @@ export class BookEditComponent implements OnInit, OnDestroy {
   newBook: Books = {
     title: '',
     genre: '',
-    author: '',
+    author: [],
     language: '',
     description: '',
     image_url: '',
@@ -49,7 +49,7 @@ export class BookEditComponent implements OnInit, OnDestroy {
 
   chosenAuthor(chosenAuthor): void {
     this.authors$ = '';
-    this.newBook.author = chosenAuthor.name;
+    this.newBook.author.push(chosenAuthor);
   }
 
   getBookDetailsFromQueryToEdit(): void {
@@ -58,12 +58,18 @@ export class BookEditComponent implements OnInit, OnDestroy {
             let parsedData = JSON.parse(data.JSONbook);
             this.newBook = parsedData;
           }
- 
-        
       })
-  
-
   }
+
+  removeAuthor(author): void {
+    for(let i = 0; i < this.newBook.author.length; i++) {
+      if(this.newBook.author[i] === author) {
+          this.newBook.author.splice(i, 1);
+          break;
+      }
+  }
+  }
+
   saveBook(): void {
     if(this.newBook.isNew === true) {
       this.bookService.addBook(this.newBook).subscribe(data=>{
@@ -71,7 +77,7 @@ export class BookEditComponent implements OnInit, OnDestroy {
       });
     }
     else {
-      this.bookService.updateBook(this.newBook._id, this.newBook).subscribe(data=>{
+      this.bookService.updateBook(this.newBook).subscribe(data=>{
         if(data) this.router.navigate(['adminspanel/book-manager']);
       });
     }

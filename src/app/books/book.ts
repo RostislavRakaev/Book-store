@@ -1,10 +1,11 @@
 import { Observable } from 'rxjs';
+import { Author } from '../adminspanel/authors/author';
 
 export interface Books{
     title: string;
     description: string;
     language: string;
-    author: string;
+    author: Author[];
     price: number;
     image_url: string;
     genre: string;

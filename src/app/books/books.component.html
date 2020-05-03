@@ -30,7 +30,7 @@
     <button class="modalbutton" mat-button (click)="openModal(book)" >
     
         <mat-card-title>{{book.title}}</mat-card-title>
-        <mat-card-subtitle>{{book.author.name}}</mat-card-subtitle>
+        <mat-card-subtitle *ngFor="let author of book.author">{{author.name}}</mat-card-subtitle>
         <img class="image_url" mat-card-md-image src="{{book.image_url}}">
         <mat-card-footer>Price: {{book.price}}</mat-card-footer>
         <!-- <div *ngIf="book.quantity <= 2" class="quantity">

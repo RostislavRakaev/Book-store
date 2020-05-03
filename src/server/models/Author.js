@@ -9,6 +9,9 @@ const AuthorSchema = new Schema({
     dob: {
         type: Date
     },
+    bio: {
+        type: String
+    },
     country: {
         type: String,
         required: true

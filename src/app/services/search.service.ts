@@ -14,23 +14,23 @@ export class SearchService {
 
   constructor(private http: HttpClient) { }
 
-  search(inputs) {
+  searchBook(inputs) {
       return inputs
         .pipe(
-        debounceTime(400),
+        debounceTime(200),
         distinctUntilChanged(),
-        switchMap(input=>this.searchEntries(input))
+        switchMap(input=>this.bookSearch(input))
         )
   }
 
-  searchEntries(title) {
+  bookSearch(title) {
     return this.http.get(this.baseUrl + '?title=' + title);
   }
 
   searchAuthor(inputs) {
     return inputs
       .pipe(
-      debounceTime(400),
+      debounceTime(200),
       distinctUntilChanged(),
       switchMap(input=>this.authorSearcher(input))
       )
@@ -39,4 +39,8 @@ export class SearchService {
   authorSearcher(name) {
     return this.http.get(this.baseUrl + '?author=' + name );
   }
+
+
+
+
 }
