@@ -1,44 +1,53 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { User } from '../user';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { User } from '../user';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss']
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit, OnDestroy {
 
-  registerUserData = {
+  registerUserData: User = {
     first_name: '',
     last_name: '',
     email: '',
     password: '',
-    isAdmin: false
+    role: 'user'
   };
     
   wrongEmail: boolean = false;
 
+  subscriptions$: Subscription = new Subscription();
+
   constructor(private _auth:AuthService, private router: Router) { }
 
+  registerUser() {
+    this.subscriptions$.add(
 
-  ngOnInit(): void {
-    
+      this._auth.registerUser(this.registerUserData).subscribe((res)=>{
+        if(res !== null) {
+          this.router.navigateByUrl('login');
+        }
+        else {
+          this.wrongEmail = !this.wrongEmail;
+        }
+      },
+      (err)=>{
+        console.log(err)
+      })
+
+    )
   }
 
-  registerUser() {
-    this._auth.registerUser(this.registerUserData).subscribe((res)=>{
-      if(res !== null) {
-        this.router.navigateByUrl('login');
-      }
-      else {
-        this.wrongEmail = !this.wrongEmail;
-      }
-    },
-    (err)=>{
-      console.log(err)
-    })
+  ngOnInit(): void {
 
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions$.unsubscribe();
   }
 }

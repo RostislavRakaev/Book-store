@@ -16,8 +16,7 @@ export class AuthorEditComponent implements OnInit, OnDestroy {
   searchBooks$ = new Subject<string>();
   books$;
 
-  subscriptionForBook$: Subscription;
-  subscriptionForQueryParams$: Subscription;
+  subscriptions$: Subscription = new Subscription();
 
   newAuthor: Author = {
     name: '',
@@ -31,9 +30,11 @@ export class AuthorEditComponent implements OnInit, OnDestroy {
   constructor(private searchService: SearchService, private authorService: AuthorService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   bookSearcher(): void {
-    this.subscriptionForBook$ = this.searchService.searchBook(this.searchBooks$).subscribe(res=>{
-      this.books$ = res;
-    })
+    this.subscriptions$.add(
+
+      this.searchService.searchBook(this.searchBooks$).subscribe(res=>this.books$ = res)
+
+    );
   }
 
   addBook(book): void {
@@ -52,15 +53,40 @@ export class AuthorEditComponent implements OnInit, OnDestroy {
 
   saveAuthor():void {;
     if(this.newAuthor.isNew) {
-       this.authorService.addAuthor(this.newAuthor).subscribe(res=>{
-        if(res) this.router.navigate(['adminspanel/authors']);
-       });
+      this.subscriptions$.add(
+
+        this.authorService.addAuthor(this.newAuthor).subscribe(res=>{
+          if(res) this.router.navigate(['adminspanel/authors']);
+         })
+
+      )
     }
     else {
-      this.authorService.changeAuthor(this.newAuthor).subscribe(res=>{
-        if(res) this.router.navigate(['adminspanel/authors']);
-      });
+      this.subscriptions$.add(
+
+        this.authorService.changeAuthor(this.newAuthor).subscribe(res=>{
+          if(res) this.router.navigate(['adminspanel/authors']);
+        })
+
+      )
     }
+  }
+
+
+
+  getBookDetailsFromQueryToEdit(): void {
+
+    this.subscriptions$.add(
+
+      this.activatedRoute.queryParams.subscribe(data=>{
+        if(data.JSONauthor) {
+          let parsedData = JSON.parse(data.JSONauthor);
+          this.newAuthor = parsedData;
+        }
+      })
+
+    )
+
   }
 
   ngOnInit(): void {
@@ -68,18 +94,8 @@ export class AuthorEditComponent implements OnInit, OnDestroy {
     this.getBookDetailsFromQueryToEdit();
   }
 
-  getBookDetailsFromQueryToEdit(): void {
-      this.subscriptionForQueryParams$ = this.activatedRoute.queryParams.subscribe(data=>{
-        if(data.JSONauthor) {
-          let parsedData = JSON.parse(data.JSONauthor);
-          this.newAuthor = parsedData;
-        }
-      })
-  }
-
   ngOnDestroy(): void {
-    this.subscriptionForBook$.unsubscribe();
-    this.subscriptionForQueryParams$.unsubscribe();
+    this.subscriptions$.unsubscribe();
   }
 
 }

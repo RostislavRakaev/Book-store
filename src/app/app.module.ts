@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BooksModule } from './books/books.module';
 import { BasketModule } from './basket/basket.module';
-import { DateFilterPipe } from './pipes/date-filter.pipe';
 import { LowToHighPipe } from './pipes/low-to-high.pipe';
 import { HighToLowPipe } from './pipes/high-to-low.pipe';
 import { BasketService } from './services/basket.service';
@@ -19,11 +18,11 @@ import { AdminspanelModule } from './adminspanel/adminspanel.module';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    DateFilterPipe,
     LowToHighPipe,
     HighToLowPipe
   ],

@@ -3,22 +3,22 @@ const Schema = mongoose.Schema;
 
 
 const CouponSchema = new Schema({
-    name: {
+    code: {
         type: String,
     },
     discount: {
         type: Number,
         required: true
     },
-    dateOfImplementation: {
-        type: Date,
+    date_of_implementation: {
+        type: Number,
         required: true
     },
-    dateOfExpiration: {
-        type: Date,
+    date_of_expiration: {
+        type: Number,
         required: true
     },
-    whoIssued: {
+    who_issued: {
         type: Schema.Types.ObjectId, ref: 'users'
     }
 })

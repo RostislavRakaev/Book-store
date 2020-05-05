@@ -11,17 +11,21 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
-  basket:Books[] = [];
+  basket: Books[] = [];
 
-  constructor(private basketService:BasketService, public authService:AuthService, private router:Router) {}
+  constructor(private basketService: BasketService, public authService: AuthService, private router: Router) {}
 
-  ngOnInit(): void {
-    this.basket = this.basketService.showBasket();
-  }
-
-  logout() {
+  logout(): void {
     localStorage.removeItem('token');
     this.router.navigate(['']);
+  }
+
+  getBasketInfo(): void {
+    this.basket = this.basketService.showBasket();
+  }
+  
+  ngOnInit(): void {
+    this.getBasketInfo();
   }
  
 }

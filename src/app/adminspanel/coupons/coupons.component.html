@@ -1,1 +1,55 @@
-<p>coupons works!</p>
+<h3 class="h-coupon">Active coupons</h3>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Code</th>
+        <th scope="col">Discount %</th>
+        <th scope="col">Date of implementation</th>
+        <th scope="col">Date of expiration</th>
+        <th scope="col">Issued</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let coupon of coupons | activeCoupons">
+        <th scope="row">{{coupon.code}}</th>
+        <td>{{coupon.discount}}</td>
+        <td>{{coupon.date_of_implementation | date}}</td>
+        <td>{{coupon.date_of_expiration | date}}</td>
+        <td>{{coupon.who_issued.first_name}}</td>
+        <button class="btn btn-danger" (click)="deleteCoupon(coupon)">Delete</button>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+<button class="btn btn-primary" (click)="toggle()"> Add new Coupon</button>
+
+<app-new-coupon *ngIf="newCouponToggler" (toggle)="toggle()"></app-new-coupon>
+
+
+<h3 class="h-coupon">Expired coupons</h3>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Code</th>
+        <th scope="col">Discount %</th>
+        <th scope="col">Implemented on</th>
+        <th scope="col">Expired on</th>
+        <th scope="col">Issued</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let coupon of coupons | expiredCoupons">
+        <th scope="row">{{coupon.code}}</th>
+        <td>{{coupon.discount}}</td>
+        <td>{{coupon.date_of_implementation | date}}</td>
+        <td>{{coupon.date_of_expiration | date}}</td>
+        <td>{{coupon.who_issued.first_name}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr>

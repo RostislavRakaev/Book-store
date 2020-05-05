@@ -11,31 +11,31 @@ import { Router } from '@angular/router';
 })
 export class AuthorListComponent implements OnInit, OnDestroy {
 
-  subscriptionForGettingAuthors$: Subscription;
+  subscriptions$: Subscription = new Subscription();
   authors: Author[];
 
   constructor(private authorService: AuthorService, private router: Router) { }
 
-  getAuthors(): void {
-    this.subscriptionForGettingAuthors$ = this.authorService.getAuthors().subscribe(data=>this.authors = data)
+  getAuthors() {
+    this.subscriptions$.add(this.authorService.getAuthors().subscribe(data=>this.authors = data));
   }
 
   editAuthor(author): void {
     author.isNew = false;
     let JSONauthor = JSON.stringify(author)
-    this.router.navigate(['adminspanel/authors/edit'], {queryParams: { JSONauthor }})
+    this.router.navigate(['adminspanel/authors/edit'], {queryParams: { JSONauthor }});
   }
 
   deleteAuthor(id): void {
-    this.authorService.deleteAuthor(id).subscribe();
+    this.subscriptions$.add(this.authorService.deleteAuthor(id).subscribe());
   }
 
   ngOnInit(): void {
-      this.getAuthors();
+    this.getAuthors()
   }
 
   ngOnDestroy(): void {
-      this.subscriptionForGettingAuthors$.unsubscribe();
+      this.subscriptions$.unsubscribe();
   }
 
 

@@ -14,21 +14,24 @@ export class ProfileComponent implements OnInit, OnDestroy {
   userId = this._auth.getDecoded()._id;
   purchasedBooks = [];
 
-  subscription:Subscription;
+  subscriptions$: Subscription = new Subscription();
 
-  constructor(private bookService:BookService, private _auth:AuthService) { }
+  constructor(private bookService: BookService, private _auth: AuthService) { }
+
+  getBooks(): void {
+    this.subscriptions$.add(
+
+      this.bookService.getUsersBooks(this.userId).subscribe(res=>this.purchasedBooks = res)
+
+    )
+  }
 
   ngOnInit(): void {
     this.getBooks();
   }
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
 
-  getBooks() {
-    this.subscription = this.bookService.getUsersBooks(this.userId).subscribe(res=>{
-      this.purchasedBooks = res;
-    })
+  ngOnDestroy(): void {
+    this.subscriptions$.unsubscribe();
   }
 
 }

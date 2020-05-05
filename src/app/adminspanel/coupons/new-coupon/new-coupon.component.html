@@ -1,0 +1,29 @@
+<form>
+    
+    <label>
+      <p class="label-txt">Code</p>
+      <input type="text" class="input" name="code" [(ngModel)]="this.newCoupon.code" required>
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+    </label>
+    <label>
+        <p class="label-txt">Percent</p>
+        <input type="number" class="input" name="percent" [(ngModel)]="this.newCoupon.discount" required>
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+
+      <label>
+        <p class="label-txt">Date of expiration</p>
+        <input type="date" class="input" name="date_of_expiration" [(ngModel)]="this.newCoupon.date_of_expiration" required>
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
+
+      <button class="btn btn-default" (click)="saveCoupon()">Save</button>
+  </form>
+
+ 

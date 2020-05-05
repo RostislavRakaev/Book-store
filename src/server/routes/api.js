@@ -8,10 +8,10 @@ const MiniSearch = require('minisearch')
 const db = 'mongodb+srv://mainless:12345678milk@cluster0-gddgz.mongodb.net/test?retryWrites=true&w=majority';
 const JWT_secret = 'some_secret_jwt'
 
-const User = require('../models/USER');
+const User = require('../models/User');
 const Books = require('../models/Books');
 const Author = require('../models/Author');
-
+const Coupon = require('../models/Coupon');
 
 mongoose.connect(db, { useFindAndModify: false, useUnifiedTopology: true, useNewUrlParser: true }, err=>{
     if(err) {
@@ -33,7 +33,6 @@ router.get('/books', (req,res)=>{
     Books.find().populate('author').exec((err, books)=>{
             res.send(books);
          });
-    Books.watch
 });
 
 router.post('/books', (req, res)=>{
@@ -145,8 +144,8 @@ router.get('/search', (req, res)=>{
 /////registration//////
 
 router.get('/users', (req, res)=>{
-    User.find((err, user)=>{
-        res.send(user);
+    User.find().populate('books').exec((err, user)=>{
+        res.status(200).send(user);
     })
 })
 
@@ -214,6 +213,16 @@ router.post('/users/:id/books', (req, res)=>{
 
 
 })
+
+router.put('/users/:id', (req, res)=>{
+    let userId = req.params.id;
+    let updatedUser = req.body;
+    
+    User.updateOne({_id: userId}, updatedUser, (err, done)=>{
+        res.status(200).send(done);
+    })
+})
+
 /////////// Login ////////////////
 
 router.post('/login', (req, res)=>{
@@ -347,6 +356,37 @@ router.post('/login', (req, res)=>{
             })
 
             
+    })
+
+    //Coupons
+
+    router.get('/coupons', (req, res)=>{
+        Coupon.find().populate('who_issued').exec((err, coupons)=>{
+            if(err) res.status(400).send(err);
+            res.status(200).send(coupons);
+        })
+    })
+
+    router.post('/coupons', (req, res)=>{
+        let coupon = req.body;
+        let newCoupon = new Coupon(coupon);
+
+        Coupon.findOne({code: newCoupon.code}, (err, match)=>{
+            if(!match) {
+                newCoupon.save((err, done)=>{
+                    if(err) console.log(err);
+                    res.status(200).send(done);
+                })
+            }
+        })
+    })
+
+    router.delete('/coupons/:id', (req, res)=>{
+        let couponId = req.params.id;
+        
+        Coupon.findByIdAndRemove(couponId, (err, done)=>{
+            res.status(200).send(done);
+        })
     })
 
 module.exports = router;

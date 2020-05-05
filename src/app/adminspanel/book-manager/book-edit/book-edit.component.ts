@@ -15,8 +15,7 @@ export class BookEditComponent implements OnInit, OnDestroy {
   searchAuthors$ = new Subject<string>();
   authors$;
   
-  subscriptionForAuthor$: Subscription;
-  subscriptionForBookDetailsToEdit$: Subscription;
+  subscriptions$: Subscription = new Subscription();
 
   newBook: Books = {
     title: '',
@@ -32,19 +31,14 @@ export class BookEditComponent implements OnInit, OnDestroy {
 
   constructor(private searchService: SearchService, private bookService: BookService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
-  ngOnInit(): void {
-    this.authorSearcher();
-    this.getBookDetailsFromQueryToEdit();
-  }
-  ngOnDestroy(): void {
-    this.subscriptionForAuthor$.unsubscribe();
-    this.subscriptionForBookDetailsToEdit$.unsubscribe();
-  }
-
   authorSearcher(): void {
-    this.subscriptionForAuthor$ = this.searchService.searchAuthor(this.searchAuthors$).subscribe(res=>{
-      this.authors$ = res;
-    })
+    this.subscriptions$.add(
+
+      this.searchService.searchAuthor(this.searchAuthors$).subscribe(res=>{
+        this.authors$ = res;
+      })
+      
+    )
   }
 
   chosenAuthor(chosenAuthor): void {
@@ -53,12 +47,16 @@ export class BookEditComponent implements OnInit, OnDestroy {
   }
 
   getBookDetailsFromQueryToEdit(): void {
-      this.subscriptionForBookDetailsToEdit$ = this.activatedRoute.queryParams.subscribe((data:any)=>{
-          if(data.JSONbook) {
-            let parsedData = JSON.parse(data.JSONbook);
-            this.newBook = parsedData;
-          }
-      })
+    this.subscriptions$.add(
+
+      this.activatedRoute.queryParams.subscribe((data:any)=>{
+        if(data.JSONbook) {
+          let parsedData = JSON.parse(data.JSONbook);
+          this.newBook = parsedData;
+        }
+    })
+
+    )
   }
 
   removeAuthor(author): void {
@@ -72,16 +70,33 @@ export class BookEditComponent implements OnInit, OnDestroy {
 
   saveBook(): void {
     if(this.newBook.isNew === true) {
-      this.bookService.addBook(this.newBook).subscribe(data=>{
-        if(data) this.router.navigate(['adminspanel/book-manager']);
-      });
+      this.subscriptions$.add(
+
+        this.bookService.addBook(this.newBook).subscribe(data=>{
+          if(data) this.router.navigate(['adminspanel/book-manager']);
+        })
+
+      )
     }
     else {
-      this.bookService.updateBook(this.newBook).subscribe(data=>{
-        if(data) this.router.navigate(['adminspanel/book-manager']);
-      });
+      this.subscriptions$.add(
+
+        this.bookService.updateBook(this.newBook).subscribe(data=>{
+          if(data) this.router.navigate(['adminspanel/book-manager']);
+        })
+        
+      )
     }
 
+  }
+
+  ngOnInit(): void {
+    this.authorSearcher();
+    this.getBookDetailsFromQueryToEdit();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions$.unsubscribe();
   }
 
 }

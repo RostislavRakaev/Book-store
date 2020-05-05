@@ -22,17 +22,18 @@ export class BooksComponent implements OnInit, OnDestroy {
   searchBooks$ = new Subject<string>();
   books$;
   
-  subscriptionForBookApi:Subscription;
-  subscriptionForSearcher: Subscription;
+  subscriptions$: Subscription = new Subscription();
 
   basketDialogRef:MatDialogRef<ModalWindowComponent>;
   
   constructor(private bookService: BookService, public dialog: MatDialog, private searchService: SearchService) {}
 
   getBooksApi():void {
-    this.subscriptionForBookApi = this.bookService.getBooksApi().subscribe((data:any)=>{
-      this.books = data;
-    })
+    this.subscriptions$.add(
+
+      this.bookService.getBooksApi().subscribe((data:any)=>this.books = data)
+
+    )
   }
 
   openModal(book:Books[]):void {
@@ -40,10 +41,15 @@ export class BooksComponent implements OnInit, OnDestroy {
       data: book
     });
   }
+
   bookSearcher():void {
-    this.subscriptionForSearcher = this.searchService.searchBook(this.searchBooks$).subscribe(response=>{
-      this.books$ = response;
-    })
+    this.subscriptions$.add(
+
+      this.searchService.searchBook(this.searchBooks$).subscribe(response=>{
+        this.books$ = response;
+      })
+
+    )
   }
 
   ngOnInit() {
@@ -52,8 +58,7 @@ export class BooksComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscriptionForBookApi.unsubscribe();
-    this.subscriptionForSearcher.unsubscribe();
+    this.subscriptions$.unsubscribe();
   }
 
 
