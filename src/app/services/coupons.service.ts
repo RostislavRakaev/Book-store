@@ -20,8 +20,11 @@ export class CouponsService {
     return this.http.post<Coupon>(this.url, coupon);
   }
 
+  checkIfcouponIsAvailableAndEdit(couponName: string): Observable<any> {
+    return this.http.get<any>(`${this.url}-check?code=${couponName}`);
+  }
+
   deleteCoupon(coupon: Coupon): Observable<Coupon> {
-    console.log(coupon)
     return this.http.delete<Coupon>(`${this.url}/${coupon._id}`)
   }
 }

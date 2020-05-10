@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Books } from '../books/book';
 import { retry } from 'rxjs/operators';
@@ -24,7 +24,7 @@ export class BookService {
   }
   
   purchaseBook(userId:number, bookId:Books[]): Observable<Books[]> {
-    return this.http.post<Books[]>(`${this.url}/users/${userId}/books`, bookId);
+    return this.http.put<Books[]>(`${this.url}/users/${userId}/books`, bookId);
   }
 
   addBook(book:Books): Observable<Books> {

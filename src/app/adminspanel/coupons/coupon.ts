@@ -7,4 +7,5 @@ export interface Coupon {
     discount: number;
     who_issued: User;
     _id?: number;
+    used?: number;
 }

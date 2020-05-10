@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import jwt_decode from 'jwt-decode';
 import { Observable } from 'rxjs';
 import { User } from '../login-registration/user';
@@ -12,8 +12,6 @@ export class AuthService {
   registeredUrl = 'http://localhost:3000/api/users';
   loginUrl = 'http://localhost:3000/api/login';
 
-  token;
-
   constructor(private http: HttpClient) { }
 
   registerUser(user: User): Observable<User> {
@@ -23,7 +21,8 @@ export class AuthService {
   loginUser(user: any): Observable<any> {
     return this.http.post<any>(this.loginUrl, user);
   }
-  public get logIn(): boolean {
+
+  get logIn(): boolean {
     if(localStorage.getItem('token')) {
       let role = this.getDecoded().role;
       if(role === 'user') {
@@ -35,7 +34,8 @@ export class AuthService {
     }
     
   }
-  public get LogInForAdmin(): boolean {
+
+  get LogInForAdmin(): boolean {
     if(localStorage.getItem('token')) {
       let role = this.getDecoded().role;
       if(role === "admin") {
@@ -49,9 +49,13 @@ export class AuthService {
   }
 
   getDecoded(): any {
-    let data = localStorage.getItem('token');
-    let decodedData = jwt_decode(data);
+    let token = localStorage.getItem('token');
+    let decodedData = jwt_decode(token);
     return decodedData;
+  }
+
+  getToken(): any {
+    return localStorage.getItem('token');
   }
 
 }

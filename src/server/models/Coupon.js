@@ -20,6 +20,10 @@ const CouponSchema = new Schema({
     },
     who_issued: {
         type: Schema.Types.ObjectId, ref: 'users'
+    },
+    used: {
+        type: Number,
+        default: 0
     }
 })
 

@@ -5,13 +5,15 @@ import { BasketService } from '../services/basket.service';
 import { BasketSuccessComponent } from './basket-success/basket-success.component';
 import { BookService } from '../services/book.service';
 import { AuthService } from '../services/auth.service';
+import { FormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [BasketComponent, BasketSuccessComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   providers: [BasketService, BookService, AuthService],
   bootstrap: [BasketComponent]
