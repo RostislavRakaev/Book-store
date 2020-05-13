@@ -1,7 +1,6 @@
 const Book = require('../models/Books');
 const Author = require('../models/Author');
 
-
 module.exports.getAuthors = function(req, res) {
     Author.find().populate('written_books').exec((err, author)=>{
         res.status(200).send(author);

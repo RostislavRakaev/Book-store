@@ -37,7 +37,7 @@ router.delete('/books/:id', bookController.deleteBook);
 //Users, registration/login
 
 router.get('/users', auth.checkTokenForAdmin, userController.getUsers);
-router.put('/users/:id', userController.updateUser);
+router.put('/users/:id', auth.checkTokenForAdmin, userController.updateUser);
 
 router.post('/users', userController.register);
 router.post('/login', userController.login);

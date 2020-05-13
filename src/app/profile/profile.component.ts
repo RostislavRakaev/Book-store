@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { BookService } from '../services/book.service';
 import { Subscription } from 'rxjs';
+import { Books } from '../books/book';
 
 
 @Component({
@@ -11,8 +12,8 @@ import { Subscription } from 'rxjs';
 })
 export class ProfileComponent implements OnInit, OnDestroy {
 
-  userId = this._auth.getDecoded()._id;
-  purchasedBooks = [];
+  userId: number = this._auth.getDecoded()._id;
+  purchasedBooks: Books[] = [];
 
   subscriptions$: Subscription = new Subscription();
 

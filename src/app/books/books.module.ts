@@ -12,14 +12,15 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { OverlayModule } from "@angular/cdk/overlay";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule} from '@angular/forms'
+import { FormsModule } from '@angular/forms'
+import { SelectFilterPipe } from '../pipes/selectFilter'
 
 
 
 
 
 @NgModule({
-  declarations: [BooksComponent, ModalWindowComponent],
+  declarations: [BooksComponent, ModalWindowComponent, SelectFilterPipe],
   entryComponents: [ModalWindowComponent],
   imports: [
     CommonModule,
@@ -29,7 +30,8 @@ import { FormsModule} from '@angular/forms'
     MatDialogModule,
     BrowserAnimationsModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   exports: [
   ],

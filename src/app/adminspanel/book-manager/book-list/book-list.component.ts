@@ -16,9 +16,7 @@ export class BookListComponent implements OnInit, OnDestroy {
   books: Books[];
   constructor(private bookService: BookService, private router: Router) { }
 
-
-
-  getBooks():void {
+  getBooks(): void {
     this.subscriptions$.add(
 
       this.bookService.getBooksApi().subscribe(data=>this.books = data)
@@ -26,7 +24,7 @@ export class BookListComponent implements OnInit, OnDestroy {
     )
   }
 
-  deleteBook(id):void {
+  deleteBook(id): void {
     this.subscriptions$.add(
       
       this.bookService.deleteBook(id).subscribe()
@@ -34,7 +32,7 @@ export class BookListComponent implements OnInit, OnDestroy {
     )
   }
 
-  editBook(book):void {
+  editBook(book): void {
     book.isNew = false;
     let JSONbook = JSON.stringify(book);
     this.router.navigate(['adminspanel/book-manager/edit'], {queryParams: { JSONbook }});

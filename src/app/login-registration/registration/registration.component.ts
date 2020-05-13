@@ -23,9 +23,9 @@ export class RegistrationComponent implements OnInit, OnDestroy {
 
   subscriptions$: Subscription = new Subscription();
 
-  constructor(private _auth:AuthService, private router: Router) { }
+  constructor(private _auth: AuthService, private router: Router) { }
 
-  registerUser() {
+  registerUser(): void {
     this.subscriptions$.add(
 
       this._auth.registerUser(this.registerUserData).subscribe((res)=>{

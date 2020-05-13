@@ -7,7 +7,7 @@ import { User } from '../login-registration/user';
 })
 export class AdminPipe implements PipeTransform {
 
-    transform(users: User[], filter?: User): any {
+    transform(users: User[], filter?: User): User[] {
       if(!users) {
         return users;
       }

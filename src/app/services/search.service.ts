@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
 import { Books } from '../books/book';
+import { BookService } from './book.service';
 
 
 @Injectable({
@@ -12,14 +13,13 @@ export class SearchService {
 
   baseUrl: string = 'http://localhost:3000/api/search';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private bookService: BookService) { }
 
   searchBook(inputs) {
       return inputs
         .pipe(
-        debounceTime(200),
         distinctUntilChanged(),
-        switchMap(input=>this.bookSearch(input))
+        switchMap((input: string)=> input.length > 0? this.bookSearch(input): this.bookService.getBooksApi())
         )
   }
 
@@ -32,7 +32,7 @@ export class SearchService {
       .pipe(
       debounceTime(200),
       distinctUntilChanged(),
-      switchMap(input=>this.authorSearcher(input))
+      switchMap((input: string)=> this.authorSearcher(input))
       )
 }
 

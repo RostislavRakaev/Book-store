@@ -8,8 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BooksModule } from './books/books.module';
 import { BasketModule } from './basket/basket.module';
-import { LowToHighPipe } from './pipes/low-to-high.pipe';
-import { HighToLowPipe } from './pipes/high-to-low.pipe';
 import { BasketService } from './services/basket.service';
 import { LoginRegistrationModule } from './login-registration/login-registration.module';
 import { ProfileModule } from './profile/profile.module';
@@ -17,14 +15,10 @@ import { AuthService } from './services/auth.service';
 import { AdminspanelModule } from './adminspanel/adminspanel.module';
 
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    LowToHighPipe,
-    HighToLowPipe
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

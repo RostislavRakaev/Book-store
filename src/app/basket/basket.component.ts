@@ -7,6 +7,8 @@ import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs';
 import { CouponsService } from '../services/coupons.service';
 import { Coupon } from '../adminspanel/coupons/coupon';
+import { PersonalInfo } from './personalInfo';
+
 
 @Component({
   selector: 'app-basket',
@@ -17,7 +19,7 @@ export class BasketComponent implements OnInit, OnDestroy  {
 
   basket: Books[] = [];
   totalPrice: number;
-  discountAmount: number;
+  currentDiscountAmount: number;
 
   code: string = '';
   promoCode: Coupon;
@@ -25,9 +27,27 @@ export class BasketComponent implements OnInit, OnDestroy  {
   wrongPromoCode: boolean = false;
   correctPromoCode: boolean = false;
 
+  personalInfo: PersonalInfo = {
+    first_name: '',
+    last_name: '',
+    email: '',
+    address1: '',
+    country: '',
+    state: '',
+    zip: '',
+    address2: ''
+  }
+
   subscriptions$: Subscription = new Subscription();
 
-  constructor(private basketService: BasketService, private router: Router, private bookService: BookService, private _auth: AuthService, private couponService: CouponsService) {}
+  publishableKey: string = 'pk_test_CIhHDjdjwEMY5uSJNBCKHVnF00jRHJu6FC';
+
+  constructor(
+    private basketService: BasketService, private router: Router, private bookService: BookService, 
+    private _auth: AuthService, private couponService: CouponsService
+    ) {
+      
+    }
 
   removeItemFromBasket(item): void {
     this.basketService.removeFromBasketOnlyOneItem(item);
@@ -55,14 +75,18 @@ export class BasketComponent implements OnInit, OnDestroy  {
   }
 
   getDiscountAmount(): number {
-    let discount = this.promoCode.discount / 100;
-    this.discountAmount = this.totalPrice * discount;
-    return this.discountAmount;
+    if(this.promoCode) {
+      let discount = this.promoCode.discount / 100;
+      this.currentDiscountAmount = this.totalPrice * discount;
+      
+      return this.currentDiscountAmount;
+    }
   }
 
-  onTotalAmountChange(): number {
-      return this.totalPrice -= this.discountAmount
+  getCurrentAmount(): number {
+    return this.currentDiscountAmount;
   }
+
 
   purchase(): void {
     if(this.basket.length > 0) {
@@ -72,25 +96,28 @@ export class BasketComponent implements OnInit, OnDestroy  {
         this.bookService.purchaseBook(userId, this.basket).subscribe(res=>{
           console.log(res);
           this.router.navigate(['basket-success']);
-      })
+        })
       
       )
     }
     
   }
 
+
+
+
   ngOnInit(): void { 
      this.getBooks();
   }
 
   ngAfterContentChecked(): void {
-     this.totalPrice = this.basket.reduce((prevValue: number, item: Books): number => {
-      return prevValue += item.price;
-    },0);
+    this.totalPrice = this.basket.reduce((prevValue: number, item: Books): number => prevValue += item.price, 0);
 
-    if(this.discountAmount !== undefined) { 
-      this.totalPrice -= this.discountAmount
+
+    if(this.getDiscountAmount() !== undefined) {
+      this.totalPrice -= this.getDiscountAmount();
     }
+
   }
 
   ngOnDestroy(): void {

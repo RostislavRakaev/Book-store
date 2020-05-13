@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy, ViewChild, ElementRef, OnChanges } from '@angular/core';
 import { Observable, Subscription, fromEvent, from, Subject } from 'rxjs';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { ModalWindowComponent } from './modal-window/modal-window.component';
@@ -16,48 +16,50 @@ import { SearchService } from '../services/search.service';
 
 export class BooksComponent implements OnInit, OnDestroy {
 
-  url:string = 'http://localhost:3000/api/books'; 
-  books:Observable<Books[]>;
+  selectedCategory;
 
   searchBooks$ = new Subject<string>();
-  books$;
-  
+  books$: Books[];
+
   subscriptions$: Subscription = new Subscription();
 
-  basketDialogRef:MatDialogRef<ModalWindowComponent>;
+  basketDialogRef: MatDialogRef<ModalWindowComponent>;
   
   constructor(private bookService: BookService, public dialog: MatDialog, private searchService: SearchService) {}
 
-  getBooksApi():void {
+  getBooksApi(): void {
     this.subscriptions$.add(
-
-      this.bookService.getBooksApi().subscribe((data:any)=>this.books = data)
-
+      this.bookService.getBooksApi().subscribe(res=>this.books$ = res)
     )
   }
 
-  openModal(book:Books[]):void {
+  openModal(book: Books[]): void {
     this.basketDialogRef = this.dialog.open(ModalWindowComponent, {
       data: book
     });
   }
 
-  bookSearcher():void {
-    this.subscriptions$.add(
+  searcher(): void {
 
-      this.searchService.searchBook(this.searchBooks$).subscribe(response=>{
-        this.books$ = response;
+    this.subscriptions$.add(
+      this.searchService.searchBook(this.searchBooks$).subscribe(data=>{
+        if(data) {
+          this.books$ = data;
+        }
       })
 
     )
   }
 
-  ngOnInit() {
+
+  ngOnInit(): void {
+    
     this.getBooksApi();
-    this.bookSearcher();
+    this.searcher();
   }
 
-  ngOnDestroy() {
+
+  ngOnDestroy(): void {
     this.subscriptions$.unsubscribe();
   }
 

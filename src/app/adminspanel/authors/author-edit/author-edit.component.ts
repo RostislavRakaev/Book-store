@@ -51,7 +51,7 @@ export class AuthorEditComponent implements OnInit, OnDestroy {
   }
 }
 
-  saveAuthor():void {;
+  saveAuthor(): void {;
     if(this.newAuthor.isNew) {
       this.subscriptions$.add(
 

@@ -49,7 +49,7 @@ export class BookEditComponent implements OnInit, OnDestroy {
   getBookDetailsFromQueryToEdit(): void {
     this.subscriptions$.add(
 
-      this.activatedRoute.queryParams.subscribe((data:any)=>{
+      this.activatedRoute.queryParams.subscribe((data: any)=>{
         if(data.JSONbook) {
           let parsedData = JSON.parse(data.JSONbook);
           this.newBook = parsedData;
