@@ -27,7 +27,7 @@
     </div>
     <a routerLink="/basket">
     <h4 class="d-flex justify-content-between align-items-center mb-3">
-      <span class="badge badge-secondary badge-pill">Basket: {{basket.length}}</span>
+      <button class="badge badge-secondary badge-pill" [disabled]="basket.length === 0">Basket: {{basket.length}}</button>
     </h4>
   </a>
   </nav>

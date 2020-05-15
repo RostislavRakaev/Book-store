@@ -15,11 +15,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms'
 import { SelectFilterPipe } from '../pipes/selectFilter'
 import {MatGridListModule} from '@angular/material/grid-list';
-import { PaginationComponent } from './pagination/pagination.component';
-import { PaginationService } from '../services/pagination.service';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [BooksComponent, ModalWindowComponent, SelectFilterPipe, PaginationComponent],
+  declarations: [BooksComponent, ModalWindowComponent, SelectFilterPipe],
   entryComponents: [ModalWindowComponent],
   imports: [
     CommonModule,
@@ -31,11 +30,12 @@ import { PaginationService } from '../services/pagination.service';
     MatSelectModule,
     FormsModule,
     HttpClientModule,
-    MatGridListModule
+    MatGridListModule,
+    RouterModule
   ],
   exports: [
   ],
-  providers: [BookService, PaginationService],
+  providers: [BookService],
   bootstrap: [BooksComponent]
 })
 export class BooksModule { }

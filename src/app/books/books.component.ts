@@ -5,14 +5,21 @@ import { ModalWindowComponent } from './modal-window/modal-window.component';
 import { Books } from './book';
 import { BookService } from '../services/book.service';
 import { SearchService } from '../services/search.service';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
+
+interface Pager {
+  pages: [];
+  currentPage: number;
+  totalPages: number;
+}
 
 @Component({
   selector: 'app-books',
   templateUrl: './books.component.html',
   styleUrls: ['./books.component.scss']
 })
-
 
 export class BooksComponent implements OnInit, OnDestroy {
 
@@ -24,8 +31,11 @@ export class BooksComponent implements OnInit, OnDestroy {
   subscriptions$: Subscription = new Subscription();
 
   basketDialogRef: MatDialogRef<ModalWindowComponent>;
+
+  pager: Pager;
+  pagedBooks = [];
   
-  constructor(private bookService: BookService, public dialog: MatDialog, private searchService: SearchService) {}
+  constructor(private bookService: BookService, public dialog: MatDialog, private searchService: SearchService, private route: ActivatedRoute) {}
 
   getBooksApi(): void {
     this.subscriptions$.add(
@@ -40,21 +50,34 @@ export class BooksComponent implements OnInit, OnDestroy {
   }
 
   searcher(): void {
-
     this.subscriptions$.add(
       this.searchService.searchBook(this.searchBooks$).subscribe(data=>{
         if(data) {
-          this.books$ = data;
+          this.pagedBooks = data;
         }
       })
 
     )
   }
 
+  loadPage(page: number): void {
+    this.subscriptions$.add(
+      this.bookService.getPaginatedBooks(page).subscribe(x => {
+        this.pager = x.pager;
+        this.pagedBooks = x.pageOfItems;
+    })
+    )
 
+  }
+
+  getPagedBooks(): void {
+    this.subscriptions$.add(
+      this.route.queryParams.subscribe(x => this.loadPage(x.page || 1))
+    )
+  }
+  
   ngOnInit(): void {
-    
-    this.getBooksApi();
+    this.getPagedBooks();
     this.searcher();
   }
 

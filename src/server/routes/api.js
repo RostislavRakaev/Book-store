@@ -34,6 +34,9 @@ router.post('/books', bookController.addBook);
 router.put('/books/:id', bookController.updateBook);
 router.delete('/books/:id', bookController.deleteBook);
 
+//paginated books
+router.get('/books-pag', bookController.getPaginatedBooks);
+
 //Users, registration/login
 
 router.get('/users', auth.checkTokenForAdmin, userController.getUsers);

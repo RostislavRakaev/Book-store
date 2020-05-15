@@ -9,7 +9,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let author of authors">
+      <tr *ngFor="let author of authors | async">
         <th scope="row">{{author.name}}</th>
         <td>{{author.country}}</td>
         <td *ngFor="let book of author.written_books">{{book.title}}</td>

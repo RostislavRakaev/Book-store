@@ -11,7 +11,7 @@ export class BookService {
 
   url: string = 'http://localhost:3000/api';
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   getBooksApi(): Observable<Books[]> {
     return this.http.get<Books[]>(`${this.url}/books`)
@@ -21,6 +21,10 @@ export class BookService {
   }
   getUsersBooks(userId: number): Observable<Books[]> {
     return this.http.get<Books[]>(`${this.url}/users/${userId}/books`);
+  }
+
+  getPaginatedBooks(page = 1): any {
+    return this.http.get<any>(`http://localhost:3000/api/books-pag?page=${page}`);
   }
   
   purchaseBook(userId: number, bookId:Books[]): Observable<Books[]> {

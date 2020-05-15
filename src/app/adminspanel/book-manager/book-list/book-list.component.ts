@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BookService } from 'src/app/services/book.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Books } from 'src/app/books/book';
 import { Router } from '@angular/router';
 
@@ -13,15 +13,12 @@ export class BookListComponent implements OnInit, OnDestroy {
 
   subscriptions$: Subscription = new Subscription();
 
-  books: Books[];
+  books: Observable<Books[]>;
+
   constructor(private bookService: BookService, private router: Router) { }
 
   getBooks(): void {
-    this.subscriptions$.add(
-
-      this.bookService.getBooksApi().subscribe(data=>this.books = data)
-
-    )
+    this.books =  this.bookService.getBooksApi();
   }
 
   deleteBook(id): void {

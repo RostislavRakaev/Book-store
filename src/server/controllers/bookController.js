@@ -1,10 +1,24 @@
+const paginate = require('jw-paginate');
+
 const Book = require('../models/Books');
 const Author = require('../models/Author');
 
 module.exports.getBooks = function(req, res) {
     Book.find().populate('author').exec((err, books)=>{
-        res.send(books);
+        res.status(200).json(books);
      });
+}
+
+module.exports.getPaginatedBooks = function(req, res) {
+    Book.find().populate('author').exec((err, books)=>{
+        const page = parseInt(req.query.page) || 1;
+        const pageSize = 9;
+
+        const pager = paginate(books.length, page, pageSize);
+
+        const pageOfItems = books.slice(pager.startIndex, pager.endIndex + 1);
+        res.status(200).json({ pager, pageOfItems });
+    })
 }
 
 module.exports.addBook = function(req, res) {

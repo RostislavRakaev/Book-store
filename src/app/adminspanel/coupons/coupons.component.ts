@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Output } from '@angular/core';
 import { CouponsService } from 'src/app/services/coupons.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Coupon } from './coupon';
 
 @Component({
@@ -14,7 +14,7 @@ export class CouponsComponent implements OnInit, OnDestroy {
 
   subscriptions$: Subscription = new Subscription();
 
-  coupons: Coupon[] = [];
+  coupons: Observable<Coupon[]>;
 
   constructor(private couponService: CouponsService) { }
 
@@ -23,11 +23,7 @@ export class CouponsComponent implements OnInit, OnDestroy {
   }
 
   getCoupons(): void {
-    this.subscriptions$.add(
-
-      this.couponService.getCoupons().subscribe(res=>this.coupons = res)
-      
-    )
+    this.coupons = this.couponService.getCoupons();
   }
 
   deleteCoupon(coupon: Coupon): void {

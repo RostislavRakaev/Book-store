@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { AuthorService } from 'src/app/services/author.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Author } from '../author';
 import { Router } from '@angular/router';
 
@@ -12,12 +12,12 @@ import { Router } from '@angular/router';
 export class AuthorListComponent implements OnInit, OnDestroy {
 
   subscriptions$: Subscription = new Subscription();
-  authors: Author[];
+  authors: Observable<Author[]>;
 
   constructor(private authorService: AuthorService, private router: Router) { }
 
-  getAuthors() {
-    this.subscriptions$.add(this.authorService.getAuthors().subscribe(data=>this.authors = data));
+  getAuthors(): void {
+    this.authors = this.authorService.getAuthors();
   }
 
   editAuthor(author): void {
@@ -31,11 +31,10 @@ export class AuthorListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getAuthors()
+    this.getAuthors();
   }
 
   ngOnDestroy(): void {
-      this.subscriptions$.unsubscribe();
   }
 
 

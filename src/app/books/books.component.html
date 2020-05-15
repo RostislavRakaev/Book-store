@@ -18,7 +18,7 @@
 
 <mat-grid-list cols="3" gutterSize="5em">
   
-  <mat-grid-tile *ngFor="let book of books$ | selectFilter: selectedCategory" #listOfBooks>
+  <mat-grid-tile *ngFor="let book of pagedBooks | selectFilter: selectedCategory" #listOfBooks>
     <mat-card>
       <div class="modalbutton" mat-button (click)="openModal(book)" >
           
@@ -38,5 +38,29 @@
 
 </mat-grid-list>
 
-<app-pagination></app-pagination>
+<div class="card text-center m-3">
+
+      <div *ngFor="let item of pagedBooks">{{item.name}}</div>
+
+  <div class="card-footer pb-0 pt-3">
+      <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+          <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item first-item">
+              <a routerLink [queryParams]="{ page: 1 }" class="page-link">First</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item previous-item">
+              <a routerLink [queryParams]="{ page: pager.currentPage - 1 }" class="page-link">Previous</a>
+          </li>
+          <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}" class="page-item number-item">
+              <a routerLink [queryParams]="{ page: page }" class="page-link">{{page}}</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item next-item">
+              <a routerLink [queryParams]="{ page: pager.currentPage + 1 }" class="page-link">Next</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item last-item">
+              <a routerLink [queryParams]="{ page: pager.totalPages }" class="page-link">Last</a>
+          </li>
+      </ul>
+  </div>
+</div>
+
     
