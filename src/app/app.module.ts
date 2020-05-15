@@ -13,12 +13,14 @@ import { LoginRegistrationModule } from './login-registration/login-registration
 import { ProfileModule } from './profile/profile.module';
 import { AuthService } from './services/auth.service';
 import { AdminspanelModule } from './adminspanel/adminspanel.module';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent
+    NavbarComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

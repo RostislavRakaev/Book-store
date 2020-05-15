@@ -1,13 +1,3 @@
-@mixin grid($cols, $margin) {
-    float: left;
-    margin-right: $margin;
-    margin-bottom: $margin;
-    width: ((100% - (($cols - 1) * $margin)) / $cols);
-
-    &:nth-child(#{$cols}n) {
-        margin-right: 0;
-    }
-}
 
 .form-control:focus {
     box-shadow: none;
@@ -26,40 +16,59 @@
     font-style: italic;
   }
 
-.basket {
-    float: right;
-}
-
 
 mat-form-field {
     width: 100%;
+    margin-bottom: 5vh;
 }
 
+mat-grid-list {
+    margin-bottom: 10vh;
 
-mat-card { 
-    @include grid(5, 2%);
-    margin:2em; 
-    width: 20%; 
+    mat-grid-tile {
 
-    .modalbutton {
-        background-color: inherit;
-        margin: inherit;
-        font: inherit;
-        border: none;
-        color: inherit;
-        
-
-        .image_url {
-            height: 50vh;
-            width: 100%;
+        mat-card {
+            background-color: rgb(255, 255, 255);
+            width: 70%;
+            height: 65vh;
+    
+                .modalbutton {
+                    padding: 0;
+                    margin: 0;
+                    border: none;
+                    font: inherit;
+                    color: inherit;
+                    background-color: transparent;
+                    cursor: pointer;
+                    width: 100%;
+                    height: inherit;
+    
+                        mat-card-title {
+                            text-align: center;
+                            height: 1em;
+                        }
+    
+                        mat-card-subtitle {
+                            text-align: center;
+                        }
+                        
+                        .image_url {
+    
+                            img {
+                                width: auto;
+                                height: 22em;
+                                margin-left: auto;
+                                margin-right: auto;
+                                display: block;
+                            }
+                        }
+                        
+                        mat-card-footer {
+                            text-align: center;
+                        }
+                }
         }
     }
-    mat-card-footer {
-        text-align: center;
-    }
-    .quantity {
-        color: red;
-    }
-
+    
 }
 

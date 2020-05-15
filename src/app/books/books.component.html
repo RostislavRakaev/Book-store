@@ -7,7 +7,7 @@
 
 
 
-<mat-form-field>
+<mat-form-field class="cardList">
   <mat-label>Sort by</mat-label>
   <mat-select [(ngModel)]="selectedCategory">
     <mat-option value="byPublishing">None</mat-option>
@@ -16,21 +16,27 @@
   </mat-select>
 </mat-form-field>
 
-
-
-<mat-card *ngFor="let book of books$ | selectFilter: selectedCategory" #listOfBooks>
-
-    <button class="modalbutton" mat-button (click)="openModal(book)" >
-    
-        <mat-card-title>{{book.title}}</mat-card-title>
-        <mat-card-subtitle *ngFor="let author of book.author">{{author.name}}</mat-card-subtitle>
-        <img class="image_url" mat-card-md-image src="{{book.image_url}}">
-        <mat-card-footer>Price: {{book.price}}</mat-card-footer>
-        <!-- <div *ngIf="book.quantity <= 2" class="quantity">
-          Hurry up, only {{book.quantity}} left
-      </div> -->
-    </button>
+<mat-grid-list cols="3" gutterSize="5em">
+  
+  <mat-grid-tile *ngFor="let book of books$ | selectFilter: selectedCategory" #listOfBooks>
+    <mat-card>
+      <div class="modalbutton" mat-button (click)="openModal(book)" >
+          
+          <mat-card-title>{{book.title}}</mat-card-title>
+          <mat-card-subtitle *ngFor="let author of book.author">{{author.name}}</mat-card-subtitle>
+          <div class="image_url">
+            <img mat-card-md-image src="{{book.image_url}}">
+          </div>
+          <mat-card-footer>Price: {{book.price}}</mat-card-footer>
+          <!-- <div *ngIf="book.quantity <= 2" class="quantity">
+            Hurry up, only {{book.quantity}} left
+        </div> -->
+      
+      </div>
     </mat-card>
-    
-    
+  </mat-grid-tile>
+
+</mat-grid-list>
+
+<app-pagination></app-pagination>
     

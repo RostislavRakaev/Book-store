@@ -18,6 +18,7 @@ export class SearchService {
   searchBook(inputs) {
       return inputs
         .pipe(
+        debounceTime(200),
         distinctUntilChanged(),
         switchMap((input: string)=> input.length > 0? this.bookSearch(input): this.bookService.getBooksApi())
         )

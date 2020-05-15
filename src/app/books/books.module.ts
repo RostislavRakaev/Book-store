@@ -14,13 +14,12 @@ import { OverlayModule } from "@angular/cdk/overlay";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms'
 import { SelectFilterPipe } from '../pipes/selectFilter'
-
-
-
-
+import {MatGridListModule} from '@angular/material/grid-list';
+import { PaginationComponent } from './pagination/pagination.component';
+import { PaginationService } from '../services/pagination.service';
 
 @NgModule({
-  declarations: [BooksComponent, ModalWindowComponent, SelectFilterPipe],
+  declarations: [BooksComponent, ModalWindowComponent, SelectFilterPipe, PaginationComponent],
   entryComponents: [ModalWindowComponent],
   imports: [
     CommonModule,
@@ -31,11 +30,12 @@ import { SelectFilterPipe } from '../pipes/selectFilter'
     BrowserAnimationsModule,
     MatSelectModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatGridListModule
   ],
   exports: [
   ],
-  providers: [BookService],
+  providers: [BookService, PaginationService],
   bootstrap: [BooksComponent]
 })
 export class BooksModule { }

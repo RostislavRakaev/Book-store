@@ -9,7 +9,7 @@ import { retry } from 'rxjs/operators';
 })
 export class BookService {
 
-  url:string = 'http://localhost:3000/api';
+  url: string = 'http://localhost:3000/api';
 
   constructor(private http:HttpClient) { }
 
@@ -19,23 +19,23 @@ export class BookService {
                 retry(3)
               )
   }
-  getUsersBooks(userId:number): Observable<Books[]> {
+  getUsersBooks(userId: number): Observable<Books[]> {
     return this.http.get<Books[]>(`${this.url}/users/${userId}/books`);
   }
   
-  purchaseBook(userId:number, bookId:Books[]): Observable<Books[]> {
+  purchaseBook(userId: number, bookId:Books[]): Observable<Books[]> {
     return this.http.put<Books[]>(`${this.url}/users/${userId}/books`, bookId);
   }
 
-  addBook(book:Books): Observable<Books> {
+  addBook(book: Books): Observable<Books> {
     return this.http.post<Books>(`${this.url}/books`, book);
   }
 
-  updateBook(book:Books): Observable<Books> {
+  updateBook(book: Books): Observable<Books> {
     return this.http.put<Books>(`${this.url}/books/${book._id}`, book);
   }
 
-  deleteBook(id:number): Observable<Books> {
+  deleteBook(id: number): Observable<Books> {
     return this.http.delete<Books>(`${this.url}/books/${id}`);
   }
 
