@@ -1,0 +1,36 @@
+.modal-window {
+    width: 70vh;
+    min-height: 85vh;
+    max-height: 90vh;
+
+    mat-card-title {
+        text-align: center;
+    }
+    mat-card-subtitle {
+        text-align: center;
+    }
+    img {
+        width: auto;
+        height: 22em;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+
+    mat-card-content {
+        width: 100%;
+        margin-top: 5vh;
+        min-height: 20vh;
+    }
+
+    mat-card-actions {
+        .button-buy {
+            width: 20vh;
+            background-color: rgb(202, 212, 230);
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+    }
+
+}

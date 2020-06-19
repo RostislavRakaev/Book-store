@@ -117,6 +117,7 @@ export class BasketComponent implements OnInit, OnDestroy  {
     if(this.getDiscountAmount() !== undefined) {
       this.totalPrice -= this.getDiscountAmount();
     }
+    else if(this.totalPrice === 0) setTimeout(()=>this.router.navigate(['']), 500);
 
   }
 

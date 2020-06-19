@@ -1,4 +1,4 @@
-<div class="form-group mb-4">
+<div class="form-group mb-4 searcher">
     <input type="search" placeholder="What're you searching for?"
      class="form-control border-primary" #searchInput
      (keyup)="searchBooks$.next($event.target.value)">
@@ -7,14 +7,14 @@
 
 
 
-<mat-form-field class="cardList">
+<!-- <mat-form-field class="cardList">
   <mat-label>Sort by</mat-label>
   <mat-select [(ngModel)]="selectedCategory">
     <mat-option value="byPublishing">None</mat-option>
     <mat-option value="lowToHigh">Price low to high</mat-option>
     <mat-option value="HighToLow">Price high to low</mat-option>
   </mat-select>
-</mat-form-field>
+</mat-form-field> -->
 
 <mat-grid-list cols="3" gutterSize="5em">
   
@@ -27,7 +27,7 @@
           <div class="image_url">
             <img mat-card-md-image src="{{book.image_url}}">
           </div>
-          <mat-card-footer>Price: {{book.price}}</mat-card-footer>
+          <!-- <mat-card-footer>{{book.price}} USD</mat-card-footer> -->
           <!-- <div *ngIf="book.quantity <= 2" class="quantity">
             Hurry up, only {{book.quantity}} left
         </div> -->
@@ -38,7 +38,7 @@
 
 </mat-grid-list>
 
-<div class="card text-center m-3">
+<div class="card text-center m-3 pagination">
 
       <div *ngFor="let item of pagedBooks">{{item.name}}</div>
 
