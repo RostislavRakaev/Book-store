@@ -21,8 +21,8 @@ module.exports.searcher = function(req, res) {
 
     }
 
-    let title = req.query.title;
-    let author = req.query.author;
+    const title = req.query.title;
+    const author = req.query.author;
     
     if(title) {
         search(title, Book, 'title', 'author', 'title', 'price', 'image_url', 'author', 'description', '_id', 'purchased_copies', 'genre', 'quantity', 'language', 'published');
@@ -31,6 +31,7 @@ module.exports.searcher = function(req, res) {
     else if(author) {
         search(author, Author, 'name', 'written_books', 'name', '_id');
     }
+
 
 }
 

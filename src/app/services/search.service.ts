@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
-import { Books } from '../books/book';
 import { BookService } from './book.service';
 
 
@@ -20,7 +18,7 @@ export class SearchService {
         .pipe(
         debounceTime(200),
         distinctUntilChanged(),
-        switchMap((input: string)=> input.length > 0? this.bookSearch(input): this.bookService.getBooksApi())
+        switchMap((input: string)=> input.length > 0? this.bookSearch(input): this.bookService.getPaginatedBooks())
         )
   }
 
@@ -40,7 +38,6 @@ export class SearchService {
   authorSearcher(name) {
     return this.http.get(this.baseUrl + '?author=' + name );
   }
-
 
 
 

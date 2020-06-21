@@ -6,13 +6,13 @@ import { Books } from './book';
 import { BookService } from '../services/book.service';
 import { SearchService } from '../services/search.service';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+
 
 
 interface Pager {
-  pages: [];
   currentPage: number;
   totalPages: number;
+  pages: [];
 }
 
 @Component({
@@ -24,6 +24,7 @@ interface Pager {
 export class BooksComponent implements OnInit, OnDestroy {
 
   selectedCategory;
+  selectedBookId: number;
 
   searchBooks$ = new Subject<string>();
   books$: Books[];
@@ -35,7 +36,8 @@ export class BooksComponent implements OnInit, OnDestroy {
   pager: Pager;
   pagedBooks = [];
   
-  constructor(private bookService: BookService, public dialog: MatDialog, private searchService: SearchService, private route: ActivatedRoute) {}
+  constructor(private bookService: BookService, public dialog: MatDialog, private searchService: SearchService, private route: ActivatedRoute) {
+  }
 
   getBooksApi(): void {
     this.subscriptions$.add(
@@ -43,18 +45,21 @@ export class BooksComponent implements OnInit, OnDestroy {
     )
   }
 
-  openModal(book: Books[]): void {
+  openModal(book: Books[], chosenId: number): void {
     this.basketDialogRef = this.dialog.open(ModalWindowComponent, {
       data: book
     });
+    this.selectedBookId = chosenId;
+    this.subscriptions$.add(
+      this.basketDialogRef.afterClosed().subscribe(result=>this.selectedBookId = result)
+    );
   }
 
   searcher(): void {
     this.subscriptions$.add(
       this.searchService.searchBook(this.searchBooks$).subscribe(data=>{
-        if(data) {
-          this.pagedBooks = data;
-        }
+        if(data.pageOfItems) this.pagedBooks = data.pageOfItems;
+        else this.pagedBooks = data;
       })
 
     )
@@ -79,6 +84,10 @@ export class BooksComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getPagedBooks();
     this.searcher();
+  }
+
+  ngAfterContentChecked(): void {
+
   }
 
 

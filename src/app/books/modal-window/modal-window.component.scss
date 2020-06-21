@@ -26,11 +26,20 @@
     mat-card-actions {
         .button-buy {
             width: 20vh;
-            background-color: rgb(202, 212, 230);
+            background-color: rgb(203, 214, 226);
             margin-left: auto;
             margin-right: auto;
             display: block;
+            
+            &:hover {
+                background-color: rgb(182, 182, 214);
+            }
         }
+
+    }
+    
+    mat-card-footer {
+        color: rgb(55, 55, 88);
     }
 
 }

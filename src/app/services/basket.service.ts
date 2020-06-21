@@ -7,19 +7,19 @@ import { Observable } from 'rxjs';
 })
 export class BasketService {
 
-  basket:Books[] = [];
+  basket: Books[] = [];
 
   constructor() { }
 
-  showBasket():Books[] {
+  showBasket(): Books[] {
     return this.basket
   }
 
-  addToBasket(book):void {
+  addToBasket(book): void {
     this.basket.push(book);
   }
 
-  removeFromBasketOnlyOneItem(item):void {
+  removeFromBasketOnlyOneItem(item): void {
     for(let i = 0; i < this.basket.length; i++) {
       if(this.basket[i] === item) {
           this.basket.splice(i, 1);

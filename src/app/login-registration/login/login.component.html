@@ -3,22 +3,20 @@
       <!-- Tabs Titles -->
   
       <!-- Icon -->
-      <div class="fadeIn first">
-        <p>Welcome!</p>
+      <div class="fadeIn first signIn">
+        <h3>Sign-In</h3>
       </div>
   
       <!-- Login Form -->
-      <form>
-        <input type="text" name="email" id="login" [(ngModel)]="loginUserData.email" class="fadeIn second"  placeholder="email" >
+      <form [ngClass]="{wrongData: invalidData}">
+        <input type="text" name="email" id="login"  [(ngModel)]="loginUserData.email" class="fadeIn second"  placeholder="email" >
         <input type="text" name="password" id="password" class="fadeIn third"  placeholder="password" [(ngModel)]="loginUserData.password">
-        <!-- <div *ngIf="check == !loginUserData">Wrong Email or password</div> -->
-        <input type="button" class="fadeIn fourth" value="Log In" (click)="loginUser()">
+        <input type="button" class="fadeIn fourth button-log" value="Log In" (click)="loginUser()">
       </form>
-  
-      <!-- Remind Passowrd -->
-      <div id="formFooter">
-        <a class="underlineHover" href="#">Forgot Password?</a>
-      </div>
-  
+
+      <ng-container *ngIf="invalidData">
+        Wrong email or password
+      </ng-container>
+
     </div>
   </div>

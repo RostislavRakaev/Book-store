@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Input } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { BasketService } from 'src/app/services/basket.service';
 import { Books } from '../book';
@@ -11,15 +11,14 @@ import { Books } from '../book';
 })
 export class ModalWindowComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<ModalWindowComponent>, @Inject(MAT_DIALOG_DATA) public book: Books, @Inject(BasketService) private basketService: BasketService) {}
+  constructor(public dialogRef: MatDialogRef<ModalWindowComponent>, @Inject(MAT_DIALOG_DATA) public book: any, @Inject(BasketService) private basketService: BasketService) {}
 
   addToBasket(chosenBook: Books): void{
     this.basketService.addToBasket(chosenBook);
-    this.dialogRef.close();
+    this.dialogRef.close(undefined);
   }
 
   ngOnInit(): void {
-
   }
 
 

@@ -1,6 +1,6 @@
-<div class="form-group mb-4 searcher">
-    <input type="search" placeholder="What're you searching for?"
-     class="form-control border-primary" #searchInput
+<div class="mb-4 searcher">
+    <input type="search" placeholder="What are you searching for"
+     class="form-control" #searchInput
      (keyup)="searchBooks$.next($event.target.value)">
      
   </div>
@@ -18,11 +18,10 @@
 
 <mat-grid-list cols="3" gutterSize="5em">
   
-  <mat-grid-tile *ngFor="let book of pagedBooks | selectFilter: selectedCategory" #listOfBooks>
-    <mat-card>
-      <div class="modalbutton" mat-button (click)="openModal(book)" >
-          
-          <mat-card-title>{{book.title}}</mat-card-title>
+  <mat-grid-tile *ngFor="let book of pagedBooks | selectFilter: selectedCategory; let i = index;"  #listOfBooks >
+    <mat-card [ngClass]="selectedBookId === i? 'selectedbook': 'true'">
+      <div class="modalbutton" mat-button (click)="openModal(book, i)" >
+          <mat-card-title >{{book.title}}</mat-card-title>
           <mat-card-subtitle *ngFor="let author of book.author">{{author.name}}</mat-card-subtitle>
           <div class="image_url">
             <img mat-card-md-image src="{{book.image_url}}">

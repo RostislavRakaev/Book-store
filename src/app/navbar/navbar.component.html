@@ -1,13 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" routerLink="">Book Store</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" routerLink="">Store <span class="sr-only">(current)</span></a>
-        </li>
+    <div class="navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav nav-a">
+        <!-- <li class="nav-item">
+          <a class="nav-link" routerLink="">Store</a>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link" routerLink="/profile" *ngIf="authService.logIn">Profile</a>
         </li>
@@ -27,15 +24,16 @@
     </div>
 
 
-    <a routerLink="/basket">
+    <a routerLink="/basket" class="basket">
     <h4 class="d-flex justify-content-between align-items-center mb-3">
+      {{totalPrice}} $ |
       {{basket.length}}
       <svg class="bi bi-credit-card" width="2.5em" height="2.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" d="M14 3H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z"/>
         <rect width="6" height="5" x="2" y="9" rx="1"/>
         <path d="M1 5h14v2H1z"/>    
       </svg>
-
+      
     </h4>
   </a>
 

@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
 
   basket: Books[] = [];
+  totalPrice: number = 0;
 
   constructor(private basketService: BasketService, public authService: AuthService, private router: Router) {}
 
@@ -26,6 +27,10 @@ export class NavbarComponent implements OnInit {
   
   ngOnInit(): void {
     this.getBasketInfo();
+  }
+
+  ngAfterContentChecked(): void {
+    this.totalPrice = this.basket.reduce((prevValue: number, item: Books): number => prevValue += item.price, 0);
   }
  
 }

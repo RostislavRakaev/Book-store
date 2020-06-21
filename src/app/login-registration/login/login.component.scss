@@ -1,12 +1,16 @@
 html {
-    background-color: #56baed;
+    background-color: rgb(182, 182, 214);
   }
   
   body {
     font-family: "Poppins", sans-serif;
-    height: 100vh;
   }
-  
+
+  .wrongData {
+    border-bottom: 2px solid rgb(223, 126, 126);
+  }
+
+
   a {
     color: #92badd;
     display:inline-block;
@@ -14,14 +18,14 @@ html {
     font-weight: 400;
   }
   
-  h2 {
+  h2, h3 {
     text-align: center;
     font-size: 16px;
     font-weight: 600;
     text-transform: uppercase;
     display:inline-block;
-    margin: 40px 8px 10px 8px; 
-    color: #cccccc;
+    margin: 20px 8px 10px 8px; 
+    color: #749cb1;
   }
   
   
@@ -34,9 +38,8 @@ html {
     flex-direction: column; 
     justify-content: center;
     width: 100%;
-    min-height: 100%;
+    height: 91.8%;
     padding: 20px;
-    margin-top: 15%;
   }
   
   #formContent {
@@ -80,7 +83,7 @@ html {
   /* FORM TYPOGRAPHY*/
   
   input[type=button], input[type=submit], input[type=reset]  {
-    background-color: #56baed;
+    background-color: #749cb1;
     border: none;
     color: white;
     padding: 15px 80px;
@@ -93,7 +96,7 @@ html {
     box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
     -webkit-border-radius: 5px 5px 5px 5px;
     border-radius: 5px 5px 5px 5px;
-    margin: 5px 20px 40px 20px;
+    margin: 20px 20px 40px 20px;
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -ms-transition: all 0.3s ease-in-out;
@@ -102,7 +105,7 @@ html {
   }
   
   input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
-    background-color: #39ace7;
+    background-color: rgb(182, 182, 214);
   }
   
   input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
@@ -258,4 +261,9 @@ html {
   #icon {
     width:60%;
   }
-  
+
+
+    
+  .button-log {
+    background-color: rgb(182, 182, 214);
+  }

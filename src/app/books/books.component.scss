@@ -1,25 +1,25 @@
-.searcher {
-    padding-bottom: 5vh;
+body {
+    margin: 0;
+    padding: 0;
+}
 
+.searcher {
+    padding-bottom: 20vh;
+    border: none;
+    position: relative;
+    top: 4em;
+    
     .form-control:focus {
         box-shadow: none;
       }
       
-      .form-control-underlined {
-        border-width: 0;
-        border-bottom-width: 1px;
-        border-radius: 0;
-        padding-left: 0;
-      }
-      
-      .form-control::placeholder {
-        font-size: 0.95rem;
-        color: #aaa;
-        font-style: italic;
-      }
+
 }
 
-
+.selectedbook {
+    box-shadow: 0.5em 6em 10em 2em rgba(225, 235, 246, 0.979);
+    background-color: red;
+}
 
 mat-form-field {
     width: 100%;
@@ -27,8 +27,7 @@ mat-form-field {
 }
 
 mat-grid-list {
-    margin-bottom: 10vh;
-
+    margin-bottom: 5vh;
     mat-grid-tile {
     
         mat-card {
@@ -91,4 +90,11 @@ mat-grid-list {
         border: inherit;
         background-color: inherit;
     }
+}
+.page-link {
+    color: rgb(76, 62, 95);
+    border: none;
+}
+.page-item.active .page-link {
+    background-color: rgb(203, 214, 226);
 }

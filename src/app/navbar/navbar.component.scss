@@ -1,10 +1,53 @@
+* {
+    margin: 0;
+    padding: 0;
+}
 
+nav {
+    height: 4em;
+    position: fixed;
+    top: 0;
+    z-index:100;   
+    width: 100%;
 
-a {
-    text-decoration: none;
-    color: black;
-
-    svg {
-        margin: 5px;
+    .navbar-brand {
+        margin: auto 1vh auto 1vh;
+        height: auto;
     }
+
+    div {
+        width: 50px;
+    }
+
+    .nav-a {
+        margin: inherit;
+
+        .nav-item {
+                color: rgb(65, 65, 82);
+                text-decoration: none;
+                
+                &:hover {
+                    border-bottom: 2px inset rgb(83, 83, 110);;
+                }
+    
+        }
+    
+    
+    }
+    
+    .basket {
+        width: auto;
+        text-decoration: none;
+        margin-left: auto;
+        margin-top: auto;
+        margin-bottom: auto;
+        color: rgb(182, 182, 214);
+    
+        svg {
+            margin: 1.3vh;
+        }
+    }
+}
+.navbar {
+    flex-wrap: nowrap;
 }
