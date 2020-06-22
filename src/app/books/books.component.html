@@ -1,65 +1,66 @@
-<div class="mb-4 searcher">
-    <input type="search" placeholder="What are you searching for"
-     class="form-control" #searchInput
-     (keyup)="searchBooks$.next($event.target.value)">
-     
+<div class="container">
+  <div class="mb-4 searcher">
+    <input type="search" placeholder="What are you searching for" class="form-control" #searchInput
+      (keyup)="searchBooks$.next($event.target.value)">
+
   </div>
 
 
 
-<!-- <mat-form-field class="cardList">
-  <mat-label>Sort by</mat-label>
-  <mat-select [(ngModel)]="selectedCategory">
-    <mat-option value="byPublishing">None</mat-option>
-    <mat-option value="lowToHigh">Price low to high</mat-option>
-    <mat-option value="HighToLow">Price high to low</mat-option>
-  </mat-select>
-</mat-form-field> -->
+  <!-- <mat-form-field class="cardList">
+    <mat-label>Sort by</mat-label>
+    <mat-select [(ngModel)]="selectedCategory">
+      <mat-option value="byPublishing">None</mat-option>
+      <mat-option value="lowToHigh">Price low to high</mat-option>
+      <mat-option value="HighToLow">Price high to low</mat-option>
+    </mat-select>
+  </mat-form-field> -->
 
-<mat-grid-list cols="3" gutterSize="5em">
-  
-  <mat-grid-tile *ngFor="let book of pagedBooks | selectFilter: selectedCategory; let i = index;"  #listOfBooks >
-    <mat-card [ngClass]="selectedBookId === i? 'selectedbook': 'true'">
-      <div class="modalbutton" mat-button (click)="openModal(book, i)" >
-          <mat-card-title >{{book.title}}</mat-card-title>
+  <mat-grid-list cols="3" gutterSize="5em" [cols]="breakpoint" (window:resize)=" onResize($event)">
+    <mat-grid-tile *ngFor="let book of pagedBooks | selectFilter: selectedCategory; let i = index;" #listOfBooks>
+      <mat-card [ngClass]="selectedBookId === i? 'selectedbook': 'true'">
+        <div class="modalbutton" mat-button (click)="openModal(book, i)">
+          <mat-card-title>{{book.title}}</mat-card-title>
           <mat-card-subtitle *ngFor="let author of book.author">{{author.name}}</mat-card-subtitle>
           <div class="image_url">
             <img mat-card-md-image src="{{book.image_url}}">
           </div>
+
           <!-- <mat-card-footer>{{book.price}} USD</mat-card-footer> -->
           <!-- <div *ngIf="book.quantity <= 2" class="quantity">
-            Hurry up, only {{book.quantity}} left
-        </div> -->
-      
-      </div>
-    </mat-card>
-  </mat-grid-tile>
+              Hurry up, only {{book.quantity}} left
+          </div> -->
 
-</mat-grid-list>
+        </div>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
 
-<div class="card text-center m-3 pagination">
 
-      <div *ngFor="let item of pagedBooks">{{item.name}}</div>
+  <div class="card text-center m-3 pagination">
 
-  <div class="card-footer pb-0 pt-3">
+    <div *ngFor="let item of pagedBooks">{{item.name}}</div>
+
+    <div class="card-footer pb-0 pt-3">
       <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
-          <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item first-item">
-              <a routerLink [queryParams]="{ page: 1 }" class="page-link">First</a>
-          </li>
-          <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item previous-item">
-              <a routerLink [queryParams]="{ page: pager.currentPage - 1 }" class="page-link">Previous</a>
-          </li>
-          <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}" class="page-item number-item">
-              <a routerLink [queryParams]="{ page: page }" class="page-link">{{page}}</a>
-          </li>
-          <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item next-item">
-              <a routerLink [queryParams]="{ page: pager.currentPage + 1 }" class="page-link">Next</a>
-          </li>
-          <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item last-item">
-              <a routerLink [queryParams]="{ page: pager.totalPages }" class="page-link">Last</a>
-          </li>
+        <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item first-item">
+          <a routerLink [queryParams]="{ page: 1 }" class="page-link">First</a>
+        </li>
+        <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item previous-item">
+          <a routerLink [queryParams]="{ page: pager.currentPage - 1 }" class="page-link">Previous</a>
+        </li>
+        <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+          class="page-item number-item">
+          <a routerLink [queryParams]="{ page: page }" class="page-link">{{page}}</a>
+        </li>
+        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item next-item">
+          <a routerLink [queryParams]="{ page: pager.currentPage + 1 }" class="page-link">Next</a>
+        </li>
+        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item last-item">
+          <a routerLink [queryParams]="{ page: pager.totalPages }" class="page-link">Last</a>
+        </li>
       </ul>
+    </div>
   </div>
-</div>
 
-    
+</div>

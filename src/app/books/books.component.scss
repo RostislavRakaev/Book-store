@@ -1,24 +1,28 @@
-body {
+* {
     margin: 0;
     padding: 0;
 }
 
+.container {
+  width: 100%;
+  min-width: 100vw;
+  padding: 0;
+  margin: 0;
+}
 .searcher {
-    padding-bottom: 20vh;
     border: none;
     position: relative;
     top: 4em;
-    
+    width: 100%;
     .form-control:focus {
         box-shadow: none;
       }
-      
+
 
 }
 
 .selectedbook {
     box-shadow: 0.5em 6em 10em 2em rgba(225, 235, 246, 0.979);
-    background-color: red;
 }
 
 mat-form-field {
@@ -27,16 +31,16 @@ mat-form-field {
 }
 
 mat-grid-list {
-    margin-bottom: 5vh;
+  padding-top: 10vh;
     mat-grid-tile {
-    
+      width: 100%;
         mat-card {
             background-color: rgb(255, 255, 255);
             width: 70%;
-            height: 65vh;
-    
+            min-height: 20vh;
+            max-height: 100%;
+
                 .modalbutton {
-                    padding: 0;
                     margin: 0;
                     border: none;
                     font: inherit;
@@ -45,27 +49,29 @@ mat-grid-list {
                     cursor: pointer;
                     width: 100%;
                     height: inherit;
-    
+
                         mat-card-title {
                             text-align: center;
-                            height: 1em;
+                            width: 100%;
                         }
-    
+
                         mat-card-subtitle {
                             text-align: center;
                         }
-                        
+
                         .image_url {
-    
+                          max-height: 45vh;
                             img {
-                                width: auto;
-                                height: 22em;
+                              padding: 0;
+                                height: auto;
+                                width: 70%;
                                 margin-left: auto;
                                 margin-right: auto;
+                                margin-bottom: 0;
                                 display: block;
                             }
                         }
-                        
+
                         mat-card-footer {
                             text-align: center;
                         }
@@ -77,7 +83,7 @@ mat-grid-list {
 
 
     }
-    
+
 }
 
 .pagination {
@@ -94,6 +100,7 @@ mat-grid-list {
 .page-link {
     color: rgb(76, 62, 95);
     border: none;
+    padding: 1vh;
 }
 .page-item.active .page-link {
     background-color: rgb(203, 214, 226);

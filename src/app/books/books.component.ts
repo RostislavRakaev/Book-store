@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, OnDestroy, ViewChild, ElementRef, OnChanges } from '@angular/core';
 import { Observable, Subscription, fromEvent, from, Subject } from 'rxjs';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ModalWindowComponent } from './modal-window/modal-window.component';
 import { Books } from './book';
 import { BookService } from '../services/book.service';
@@ -23,6 +23,8 @@ interface Pager {
 
 export class BooksComponent implements OnInit, OnDestroy {
 
+  breakpoint: number = 3;
+
   selectedCategory;
   selectedBookId: number;
 
@@ -35,13 +37,13 @@ export class BooksComponent implements OnInit, OnDestroy {
 
   pager: Pager;
   pagedBooks = [];
-  
+
   constructor(private bookService: BookService, public dialog: MatDialog, private searchService: SearchService, private route: ActivatedRoute) {
   }
 
   getBooksApi(): void {
     this.subscriptions$.add(
-      this.bookService.getBooksApi().subscribe(res=>this.books$ = res)
+      this.bookService.getBooksApi().subscribe(res => this.books$ = res)
     )
   }
 
@@ -51,14 +53,14 @@ export class BooksComponent implements OnInit, OnDestroy {
     });
     this.selectedBookId = chosenId;
     this.subscriptions$.add(
-      this.basketDialogRef.afterClosed().subscribe(result=>this.selectedBookId = result)
+      this.basketDialogRef.afterClosed().subscribe(result => this.selectedBookId = result)
     );
   }
 
   searcher(): void {
     this.subscriptions$.add(
-      this.searchService.searchBook(this.searchBooks$).subscribe(data=>{
-        if(data.pageOfItems) this.pagedBooks = data.pageOfItems;
+      this.searchService.searchBook(this.searchBooks$).subscribe(data => {
+        if (data.pageOfItems) this.pagedBooks = data.pageOfItems;
         else this.pagedBooks = data;
       })
 
@@ -70,7 +72,7 @@ export class BooksComponent implements OnInit, OnDestroy {
       this.bookService.getPaginatedBooks(page).subscribe(x => {
         this.pager = x.pager;
         this.pagedBooks = x.pageOfItems;
-    })
+      })
     )
 
   }
@@ -80,10 +82,15 @@ export class BooksComponent implements OnInit, OnDestroy {
       this.route.queryParams.subscribe(x => this.loadPage(x.page || 1))
     )
   }
-  
+
+  onResize(event) {
+    this.breakpoint = (window.innerWidth <= 500) ? 1 : 3;
+  }
+
   ngOnInit(): void {
     this.getPagedBooks();
     this.searcher();
+    this.breakpoint = (window.innerWidth <= 500) ? 1 : 3;
   }
 
   ngAfterContentChecked(): void {
