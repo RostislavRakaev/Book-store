@@ -3,56 +3,53 @@
   padding: 0;
 }
 
+
 nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: center;
   height: 4em;
   position: fixed;
-  top: 0;
   z-index: 100;
   width: 100%;
-
-  .navbar-collapse {
-    max-width: 20vw;
-  }
+  flex-wrap: nowrap;
 
   .navbar-nav {
+    display: flex;
     flex-direction: row;
-    .nav-item {
-      color: rgb(65, 65, 82);
-      text-decoration: none;
-      padding-left: 0.5vh;
 
-      &:hover {
-        border-bottom: 2px inset rgb(83, 83, 110);
-      }
+    li {
+      margin: 0.5vh;
+      margin-right:auto
     }
   }
-
-  .navbar-brand {
-    margin: auto 1vh auto 1vh;
-    height: auto;
-  }
-
-  div {
-    width: 50px;
-  }
-
-  .nav-a {
-    margin: inherit;
-  }
-
-  .basket {
-    flex-basis: auto;
-    width: auto;
+  .nav-item {
+    color: rgb(65, 65, 82);
     text-decoration: none;
-    margin-bottom: auto;
-    margin-left: auto;
-    color: rgb(182, 182, 214);
 
+    &:hover {
+      border-bottom: 2px inset rgb(83, 83, 110);
+    }
+  }
+
+  h4 {
+    margin: 0;
+  }
+  .basket {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    justify-content: space-between;
+    text-align: center;
+    color: rgb(182, 182, 214);
     svg {
-      margin: 1.3vh;
+      margin: 1vh;
+      max-height: 30px;
     }
   }
 }
-.navbar {
-  flex-wrap: nowrap;
-}
+
+

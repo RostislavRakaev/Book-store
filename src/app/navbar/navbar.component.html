@@ -1,68 +1,39 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
   <a class="navbar-brand" routerLink="">Book Store</a>
-  <div class="navbar-collapse" id="navbarNav">
+
+  <div id="navbarNav">
     <ul class="navbar-nav nav-a">
-      <!-- <li class="nav-item">
-          <a class="nav-link" routerLink="">Store</a>
-        </li> -->
       <li class="nav-item">
-        <a class="nav-link" routerLink="/profile" *ngIf="authService.logIn"
-          >Profile</a
-        >
+        <a class="nav-link" routerLink="/profile" *ngIf="authService.logIn">Profile</a>
       </li>
       <li class="nav-item">
-        <a
-          class="nav-link"
-          routerLink="/adminspanel"
-          *ngIf="authService.LogInForAdmin"
-          >Manage</a
-        >
+        <a class="nav-link" routerLink="/adminspanel" *ngIf="authService.LogInForAdmin">Manage</a>
       </li>
       <li class="nav-item">
-        <a
-          class="nav-link"
-          routerLink="/login"
-          *ngIf="!authService.logIn && !authService.LogInForAdmin"
-          >Login</a
-        >
+        <a class="nav-link" routerLink="/login" *ngIf="!authService.logIn && !authService.LogInForAdmin">Login</a>
       </li>
       <li class="nav-item">
-        <a
-          class="nav-link"
-          routerLink="/registration"
-          *ngIf="!authService.logIn && !authService.LogInForAdmin"
-          >Registration</a
-        >
+        <a class="nav-link" routerLink="/registration"
+          *ngIf="!authService.logIn && !authService.LogInForAdmin">Registration</a>
       </li>
       <li class="nav-item">
-        <a
-          class="nav-link"
-          (click)="logout()"
-          *ngIf="authService.logIn || authService.LogInForAdmin"
-          >Logout</a
-        >
+        <a class="nav-link" (click)="logout()" *ngIf="authService.logIn || authService.LogInForAdmin">Logout</a>
       </li>
     </ul>
   </div>
 
   <a routerLink="/basket" class="basket">
-    <h4 class="column d-flex justify-content-between align-items-center mb-3">
+    <h4 class="row align-items-center ">
       {{ totalPrice }} $ | {{ basket.length }}
-      <svg
-        class="bi bi-credit-card"
-        width="2.5em"
-        height="2.5em"
-        viewBox="0 0 16 16"
-        fill="currentColor"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M14 3H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z"
-        />
+
+      <svg width="5vh" height="5vh" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd"
+          d="M14 3H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z" />
         <rect width="6" height="5" x="2" y="9" rx="1" />
         <path d="M1 5h14v2H1z" />
       </svg>
     </h4>
   </a>
+
 </nav>

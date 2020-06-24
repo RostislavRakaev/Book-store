@@ -3,6 +3,8 @@
   padding: 0;
 }
 
+
+
 .container {
   overflow: hidden;
   display: flex;
@@ -14,7 +16,6 @@
 }
 
 app-navbar {
-  display: flex;
   align-items: center;
   justify-content: center;
 }

@@ -26,7 +26,6 @@
     "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "elasticsearch": "^16.7.1",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "jw-paginate": "^1.0.4",
@@ -36,8 +35,6 @@
     "node": "^13.12.0",
     "nodemon": "^2.0.3",
     "rxjs": "^6.5.5",
-    "stripe": "^8.51.0",
-    "stripe-angular": "^1.0.2",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },
