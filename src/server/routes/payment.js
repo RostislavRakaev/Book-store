@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const paymentController = require('../controllers/paymentController')
 
-
-router.get('/', (req, res)=>{
-    console.log('it did work')
+router.get('/', (req, res) => {
+  res.status(200).send('payment');
 });
 
-router.get('/secret', (req, res)=>{
-    
-})
+router.post('/charge', paymentController.charge);
 
 module.exports = router;

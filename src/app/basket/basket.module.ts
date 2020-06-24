@@ -6,11 +6,12 @@ import { BasketSuccessComponent } from './basket-success/basket-success.componen
 import { BookService } from '../services/book.service';
 import { AuthService } from '../services/auth.service';
 import { FormsModule } from '@angular/forms';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 
 
 @NgModule({
-  declarations: [BasketComponent, BasketSuccessComponent],
+  declarations: [BasketComponent, BasketSuccessComponent, CheckoutComponent],
   imports: [
     CommonModule,
     FormsModule

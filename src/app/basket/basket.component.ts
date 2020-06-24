@@ -15,7 +15,7 @@ import { PersonalInfo } from './personalInfo';
   templateUrl: './basket.component.html',
   styleUrls: ['./basket.component.scss']
 })
-export class BasketComponent implements OnInit, OnDestroy  {
+export class BasketComponent implements OnInit, OnDestroy {
 
   basket: Books[] = [];
   totalPrice: number;
@@ -43,11 +43,11 @@ export class BasketComponent implements OnInit, OnDestroy  {
   publishableKey: string = 'pk_test_CIhHDjdjwEMY5uSJNBCKHVnF00jRHJu6FC';
 
   constructor(
-    private basketService: BasketService, private router: Router, private bookService: BookService, 
+    private basketService: BasketService, private router: Router, private bookService: BookService,
     private _auth: AuthService, private couponService: CouponsService
-    ) {
-      
-    }
+  ) {
+
+  }
 
   removeItemFromBasket(item): void {
     this.basketService.removeFromBasketOnlyOneItem(item);
@@ -58,11 +58,11 @@ export class BasketComponent implements OnInit, OnDestroy  {
   }
 
   redeemCoupon(): void {
-    
+
     this.subscriptions$.add(
-      
-      this.couponService.checkIfcouponIsAvailableAndEdit(this.code).subscribe(res=>{
-        if(res === null) {
+
+      this.couponService.checkIfcouponIsAvailableAndEdit(this.code).subscribe(res => {
+        if (res === null) {
           this.wrongPromoCode = true;
         }
         else {
@@ -75,10 +75,10 @@ export class BasketComponent implements OnInit, OnDestroy  {
   }
 
   getDiscountAmount(): number {
-    if(this.promoCode) {
+    if (this.promoCode) {
       let discount = this.promoCode.discount / 100;
       this.currentDiscountAmount = this.totalPrice * discount;
-      
+
       return this.currentDiscountAmount;
     }
   }
@@ -89,35 +89,34 @@ export class BasketComponent implements OnInit, OnDestroy  {
 
 
   purchase(): void {
-    if(this.basket.length > 0) {
+    if (this.basket.length > 0) {
       let userId = this._auth.getDecoded()._id;
       this.subscriptions$.add(
 
-        this.bookService.purchaseBook(userId, this.basket).subscribe(res=>{
+        this.bookService.purchaseBook(userId, this.basket).subscribe(res => {
           console.log(res);
           this.router.navigate(['basket-success']);
         })
-      
+
       )
     }
-    
+
   }
 
 
 
 
-  ngOnInit(): void { 
-     this.getBooks();
+  ngOnInit(): void {
+    this.getBooks();
   }
 
   ngAfterContentChecked(): void {
     this.totalPrice = this.basket.reduce((prevValue: number, item: Books): number => prevValue += item.price, 0);
 
 
-    if(this.getDiscountAmount() !== undefined) {
+    if (this.getDiscountAmount() !== undefined) {
       this.totalPrice -= this.getDiscountAmount();
     }
-    else if(this.totalPrice === 0) setTimeout(()=>this.router.navigate(['']), 500);
 
   }
 
