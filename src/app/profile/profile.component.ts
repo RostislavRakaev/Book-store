@@ -13,6 +13,8 @@ import { Books } from '../books/book';
 export class ProfileComponent implements OnInit, OnDestroy {
 
   userId: number = this._auth.getDecoded()._id;
+  breakpoint: number = 3;
+
   purchasedBooks: Books[] = [];
 
   subscriptions$: Subscription = new Subscription();
@@ -22,13 +24,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
   getBooks(): void {
     this.subscriptions$.add(
 
-      this.bookService.getUsersBooks(this.userId).subscribe(res=>this.purchasedBooks = res)
+      this.bookService.getUsersBooks(this.userId).subscribe(res => this.purchasedBooks = res)
 
     )
   }
 
+  onResize(event) {
+    this.breakpoint = (window.innerWidth <= 500) ? 1 : 3;
+  }
+
   ngOnInit(): void {
     this.getBooks();
+    this.breakpoint = (window.innerWidth <= 500) ? 1 : 3;
   }
 
   ngOnDestroy(): void {

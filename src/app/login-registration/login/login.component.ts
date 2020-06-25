@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginUserData = {
     email: '',
     password: ''
-  }; 
+  };
 
   invalidData: boolean = false;
 
@@ -23,24 +23,27 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(private _auth: AuthService, private router: Router) { }
 
   loginUser(): void {
-    this.subscriptions$.add(
+    if (this.loginUserData.email && this.loginUserData.password) {
+      this.subscriptions$.add(
 
-      this._auth.loginUser(this.loginUserData).subscribe(resp=>{
+        this._auth.loginUser(this.loginUserData).subscribe(resp => {
           this.router.navigate(['']);
           localStorage.setItem('token', resp.token);
-      },
-      (err)=>{
-        if(err) this.invalidData = true;
-        else this.invalidData = false;
-      }
-      )
+        },
+          (err) => {
+            if (err) this.invalidData = true;
+            else this.invalidData = false;
+          }
+        )
 
-    )
+      )
+    }
+    else this.invalidData = true;
   }
 
   ngOnInit(): void {
   }
-  
+
   ngOnDestroy(): void {
     this.subscriptions$.unsubscribe();
   }

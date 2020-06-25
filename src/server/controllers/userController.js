@@ -7,7 +7,12 @@ const Book = require('../models/Books');
 const JWT_secret = 'some_secret_jwt'
 
 module.exports.getUsers = (req, res) => {
-  User.find().populate('books').exec((err, user) => {
+  User.find().populate({
+    path: 'books',
+    populate: {
+      path: 'author'
+    }
+  }).exec((err, user) => {
     res.status(200).json(user);
   })
 }

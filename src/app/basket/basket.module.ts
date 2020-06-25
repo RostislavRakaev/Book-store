@@ -7,6 +7,8 @@ import { BookService } from '../services/book.service';
 import { AuthService } from '../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
 
 
 
@@ -14,7 +16,9 @@ import { CheckoutComponent } from './checkout/checkout.component';
   declarations: [BasketComponent, BasketSuccessComponent, CheckoutComponent],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    MatGridListModule,
+    MatCardModule
   ],
   providers: [BasketService, BookService, AuthService],
   bootstrap: [BasketComponent]

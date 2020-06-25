@@ -1,9 +1,14 @@
+* {
+
+}
 html {
     background-color: rgb(182, 182, 214);
+
   }
 
   body {
     font-family: "Poppins", sans-serif;
+
   }
 
   .wrongData {
@@ -40,6 +45,7 @@ html {
     width: 100%;
     height: 91.8%;
     padding: 20px;
+    margin: 10vh auto 0 auto;
   }
 
   #formContent {

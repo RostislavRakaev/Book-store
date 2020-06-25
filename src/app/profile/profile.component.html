@@ -1,21 +1,21 @@
-<div class="myBooks">
-    <p>My books: </p>
+<div class="container">
+  <div class="text">
+    <h1>Purchased books:</h1>
+  </div>
+
+  <mat-grid-list cols="3" gutterSize="5em" [cols]="breakpoint" (window:resize)="onResize($event)">
+    <mat-grid-tile *ngFor="let book of purchasedBooks" #listOfBooks>
+      <mat-card>
+        <div>
+          <mat-card-title>{{book.title}}</mat-card-title>
+          <mat-card-subtitle *ngFor="let author of book.author">{{author.name}}</mat-card-subtitle>
+          <div class="image_url">
+            <img mat-card-md-image src="{{book.image_url}}">
+          </div>
+
+        </div>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+
 </div>
-
-<div *ngIf="purchasedBooks.length else empty">
-
-<mat-card *ngFor="let book of purchasedBooks">
-    
-        <mat-card-title>{{book.title}}</mat-card-title>
-        <mat-card-subtitle>{{book.author.name}}</mat-card-subtitle>
-        <img class="image_url" mat-card-md-image src="{{book.image_url}}">
-    
-</mat-card>
-
-</div>
-
-<ng-template id="empty" #empty>
-    Currently it's empty :(
-</ng-template>
-
-

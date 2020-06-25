@@ -4,6 +4,8 @@ import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { FormsModule } from '@angular/forms'
 import { AuthService } from '../services/auth.service';
+import { AppRoutingModule } from '../app-routing.module';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -12,7 +14,8 @@ import { AuthService } from '../services/auth.service';
   declarations: [LoginComponent, RegistrationComponent],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    RouterModule
   ],
   bootstrap: [
     LoginComponent

@@ -11,7 +11,7 @@ import { Books } from '../book';
 })
 export class ModalWindowComponent implements OnInit {
 
-  closeBtnIfWindowIsSlow: boolean = false;
+  closeBtnIfWindowIsLow: boolean = false;
 
   constructor(public dialogRef: MatDialogRef<ModalWindowComponent>, @Inject(MAT_DIALOG_DATA) public book: any, @Inject(BasketService) private basketService: BasketService) { }
 
@@ -25,7 +25,7 @@ export class ModalWindowComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.closeBtnIfWindowIsSlow = (window.innerWidth <= 1200) ? true : false;
+    this.closeBtnIfWindowIsLow = (window.innerWidth <= 1200) ? true : false;
   }
 
 

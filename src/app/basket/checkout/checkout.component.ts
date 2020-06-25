@@ -10,7 +10,6 @@ import {
 
 import { NgForm } from '@angular/forms';
 import { BasketService } from 'src/app/services/basket.service';
-import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
@@ -30,7 +29,7 @@ export class CheckoutComponent implements OnInit {
 
   subscriptions$: Subscription = new Subscription();
 
-  constructor(private cd: ChangeDetectorRef, protected basketService: BasketService, private router: Router, private _auth: AuthService) { }
+  constructor(private cd: ChangeDetectorRef, public basketService: BasketService, private router: Router, private _auth: AuthService) { }
 
   async onSubmit(form: NgForm) {
     const { token, error } = await stripe.createToken(this.card);
@@ -40,13 +39,19 @@ export class CheckoutComponent implements OnInit {
     else {
       this.subscriptions$.add(
         this.basketService.submitPayment().subscribe(
-          x => { if (x.status === 'succeeded') this.router.navigate(['basket-sucess']) },
+          x => {
+            if (x.status === 'succeeded') {
+              this.router.navigate(['basket-sucess'], { queryParams: { purchased_books: JSON.stringify(this.basketService.showBasket()) } });
+              this.basketService.clearTheBasket();
+              this.subscriptions$.add(
+                this.basketService.purchase(userId, this.basketService.showBasket()).subscribe(x => this.basketService.clearTheBasket())
+              )
+            }
+          },
           err => console.log(err)
         )
       )
-      this.subscriptions$.add(
-        this.basketService.purchase(userId, this.basketService.showBasket()).subscribe(x => console.log(x))
-      )
+
     }
   }
 

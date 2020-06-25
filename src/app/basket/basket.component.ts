@@ -43,7 +43,7 @@ export class BasketComponent implements OnInit, OnDestroy {
   publishableKey: string = 'pk_test_CIhHDjdjwEMY5uSJNBCKHVnF00jRHJu6FC';
 
   constructor(
-    private basketService: BasketService, private router: Router, private bookService: BookService,
+    protected basketService: BasketService, private router: Router, private bookService: BookService,
     private _auth: AuthService, private couponService: CouponsService
   ) {
 
@@ -61,15 +61,16 @@ export class BasketComponent implements OnInit, OnDestroy {
 
     this.subscriptions$.add(
 
-      this.couponService.checkIfcouponIsAvailableAndEdit(this.code).subscribe(res => {
-        if (res === null) {
-          this.wrongPromoCode = true;
-        }
-        else {
+      this.couponService.checkIfcouponIsAvailableAndEdit(this.code).subscribe(
+        res => {
           this.promoCode = res;
           this.correctPromoCode = true;
+        },
+        err => {
+          this.wrongPromoCode = true;
+          setTimeout(() => this.wrongPromoCode = false, 1500);
         }
-      })
+      )
 
     )
   }
@@ -87,37 +88,20 @@ export class BasketComponent implements OnInit, OnDestroy {
     return this.currentDiscountAmount;
   }
 
-
-  purchase(): void {
-    if (this.basket.length > 0) {
-      let userId = this._auth.getDecoded()._id;
-      this.subscriptions$.add(
-
-        this.bookService.purchaseBook(userId, this.basket).subscribe(res => {
-          console.log(res);
-          this.router.navigate(['basket-success']);
-        })
-
-      )
-    }
-
-  }
-
-
-
-
   ngOnInit(): void {
     this.getBooks();
+
   }
 
   ngAfterContentChecked(): void {
-    this.totalPrice = this.basket.reduce((prevValue: number, item: Books): number => prevValue += item.price, 0);
+    this.totalPrice = this.basketService.getTotaPrice();
 
 
     if (this.getDiscountAmount() !== undefined) {
       this.totalPrice -= this.getDiscountAmount();
     }
 
+    if (this.basketService.showBasket().length <= 0) this.router.navigate(['']);
   }
 
   ngOnDestroy(): void {

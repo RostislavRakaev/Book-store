@@ -1,0 +1,63 @@
+* {
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.text {
+  margin-top: 6em;
+  text-align: center;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 5vh;
+}
+
+mat-grid-list {
+padding-top: 10vh;
+
+  mat-grid-tile {
+    width: 100%;
+      mat-card {
+          background-color: rgb(255, 255, 255);
+          width: 70%;
+          min-height: 25vh;
+          max-height: 100%;
+
+
+          mat-card-title {
+              text-align: center;
+              width: 100%;
+          }
+
+          mat-card-subtitle {
+              text-align: center;
+          }
+
+          .image_url {
+            max-height: 45vh;
+              img {
+                padding: 0;
+                  height: auto;
+                  width: 70%;
+                  margin-left: auto;
+                  margin-right: auto;
+                  margin-bottom: 0;
+                  display: block;
+              }
+          }
+
+          mat-card-footer {
+              text-align: center;
+          }
+
+      }
+
+
+  }
+
+}

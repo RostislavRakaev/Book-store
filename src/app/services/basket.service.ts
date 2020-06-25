@@ -20,6 +20,10 @@ export class BasketService {
     return this.basket
   }
 
+  getBasketLength(): number {
+    return this.basket.length;
+  }
+
   addToBasket(book): void {
     this.basket.push(book);
   }
@@ -34,11 +38,8 @@ export class BasketService {
   }
 
   clearTheBasket() {
+    this.basket = [];
     return [];
-  }
-
-  purchase(userId: number, bookId: Books[]): Observable<Books[]> {
-    return this.http.put<Books[]>(`${this.url}/users/${userId}/books`, bookId);
   }
 
   getTotaPrice(): number {
@@ -47,5 +48,9 @@ export class BasketService {
 
   submitPayment(): Observable<any> {
     return this.http.post(this.paymentUrl, { amount: this.getTotaPrice() });
+  }
+
+  purchase(userId: number, bookId: Books[]): Observable<Books[]> {
+    return this.http.put<Books[]>(`${this.url}/users/${userId}/books`, bookId);
   }
 }

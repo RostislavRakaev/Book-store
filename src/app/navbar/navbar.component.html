@@ -25,7 +25,7 @@
 
   <a routerLink="/basket" class="basket">
     <h4 class="row align-items-center ">
-      {{ totalPrice }} $ | {{ basket.length }}
+      {{ this.basketService.getTotaPrice() }} $ | {{ this.basketService.getBasketLength() }}
 
       <svg width="5vh" height="5vh" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd"

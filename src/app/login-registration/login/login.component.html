@@ -8,13 +8,16 @@
     </div>
 
     <!-- Login Form -->
-    <form [ngClass]="{wrongData: invalidData}">
-      <input type="text" name="email" id="login" [(ngModel)]="loginUserData.email" class="fadeIn second"
+    <form [ngClass]="{wrongData: invalidData}" ngNativeValidate>
+      <input type="text" name="email" id="login" required [(ngModel)]="loginUserData.email" class="fadeIn second"
         placeholder="email">
-      <input type="password" name="password" id="password" class="fadeIn third" placeholder="password"
+      <input type="password" name="password" id="password" class="fadeIn third" placeholder="password" required
         [(ngModel)]="loginUserData.password">
       <input type="button" class="fadeIn fourth button-log" value="Log In" (click)="loginUser()">
+      <div><a class="nav-link" routerLink="/registration">Don't have an account yet?</a></div>
     </form>
+
+
 
     <ng-container *ngIf="invalidData">
       Wrong email or password

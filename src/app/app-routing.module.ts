@@ -21,33 +21,33 @@ import { AuthorEditComponent } from './adminspanel/authors/author-edit/author-ed
 
 
 
-const adminBookRoutes:Routes = [
-  {path: '', component: BookListComponent},
-  {path: 'edit', component: BookEditComponent},
-  {path: '**', redirectTo: ''}
+const adminBookRoutes: Routes = [
+  { path: '', component: BookListComponent },
+  { path: 'edit', component: BookEditComponent },
+  { path: '**', redirectTo: '' }
 ]
-const authorsRoutes:Routes = [
-  {path: '', component: AuthorListComponent},
-  {path: 'edit', component: AuthorEditComponent},
-  {path: '**', redirectTo: ''}
+const authorsRoutes: Routes = [
+  { path: '', component: AuthorListComponent },
+  { path: 'edit', component: AuthorEditComponent },
+  { path: '**', redirectTo: '' }
 ]
-const adminsRoutes:Routes = [
-  {path: '', component: UserListComponent},
-  {path: 'coupons', component: CouponsComponent},
-  {path: 'book-manager', component: BookManagerComponent, children: adminBookRoutes},
-  {path: 'authors', component: AuthorsComponent, children: authorsRoutes},
-  {path: '**', redirectTo: ''}
+const adminsRoutes: Routes = [
+  { path: '', component: UserListComponent },
+  { path: 'coupons', component: CouponsComponent },
+  { path: 'book-manager', component: BookManagerComponent, children: adminBookRoutes },
+  { path: 'authors', component: AuthorsComponent, children: authorsRoutes },
+  { path: '**', redirectTo: '' }
 ]
 
 const routes: Routes = [
-  {path: '', component: BooksComponent},
-  {path: 'basket', component: BasketComponent, canActivate: [BasketGuard]},
-  {path: 'basket-sucess', component: BasketSuccessComponent, canActivate: [BasketGuard]},
-  {path: 'login', component: LoginComponent},
-  {path: 'registration', component: RegistrationComponent},
-  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
-  {path: 'adminspanel', component: AdminspanelComponent,canActivate: [AuthForAdminGuard], children: adminsRoutes },
-  {path: '**', redirectTo: '' }
+  { path: '', component: BooksComponent },
+  { path: 'basket', component: BasketComponent, canActivate: [BasketGuard] },
+  { path: 'basket-sucess', component: BasketSuccessComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'registration', component: RegistrationComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'adminspanel', component: AdminspanelComponent, canActivate: [AuthForAdminGuard], children: adminsRoutes },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

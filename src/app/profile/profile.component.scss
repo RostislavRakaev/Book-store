@@ -1,44 +1,60 @@
-@mixin grid($cols, $margin) {
-    float: left;
-    margin-right: $margin;
-    margin-bottom: $margin;
-    width: ((100% - (($cols - 1) * $margin)) / $cols);
 
-    &:nth-child(#{$cols}n) {
-        margin-right: 0;
-    }
+
+.container {
+  display: flex;
+  flex-direction: column;
 }
 
-.basket {
-    float: right;
+.text {
+  margin-top: 6em;
+  text-align: center;
 }
-
 
 mat-form-field {
+  width: 100%;
+  margin-bottom: 5vh;
+}
+
+mat-grid-list {
+  min-height: 85vh;
+
+  mat-grid-tile {
     width: 100%;
+      mat-card {
+          background-color: rgb(255, 255, 255);
+          width: 70%;
+          max-height: 100%;
+
+
+          mat-card-title {
+              text-align: center;
+              width: 100%;
+          }
+
+          mat-card-subtitle {
+              text-align: center;
+          }
+
+          .image_url {
+            max-height: 45vh;
+              img {
+                padding: 0;
+                  height: auto;
+                  width: 70%;
+                  margin-left: auto;
+                  margin-right: auto;
+                  margin-bottom: 0;
+                  display: block;
+              }
+          }
+
+          mat-card-footer {
+              text-align: center;
+          }
+
+      }
+
+
+  }
+
 }
-
-
-mat-card { 
-    @include grid(5, 2%);
-    margin:2em; 
-    width: 20%; 
-
-    .modalbutton {
-        background-color: inherit;
-        margin: inherit;
-        font: inherit;
-        border: none;
-        color: inherit;
-        
-
-        .image_url {
-            height: 50vh;
-            width: 100%;
-        }
-    }
-
-
-
-}
-
