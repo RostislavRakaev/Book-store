@@ -1,12 +1,18 @@
 * {
   margin: 0;
 }
-.wrongCoupon {
-  border: 0.3vh solid rgb(167, 81, 81);
+
+@media screen and (max-width: 760px) {
+  .container {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
 }
+
 .container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse;
+  justify-content: space-between;
 }
 
 button[type=submit] {
@@ -18,4 +24,11 @@ button[type=submit] {
     background-color: rgb(182, 182, 214);
     color: #ffffff;
   }
+}
+app-checkout {
+  width: 100%;
+}
+
+.wrongCoupon {
+  border: 0.3vh solid rgb(167, 81, 81);
 }

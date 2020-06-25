@@ -1,48 +1,46 @@
 <div class="container">
-  <div class="column">
-    <div class="col-md-4 order-md-2 mb-4">
-      <h4 class="d-flex justify-content-between align-items-center mb-3">
-        <span class="text-muted">Your cart</span>
-      </h4>
-      <ul class="list-group mb-3">
+  <div class="col-md-4 order-md-2">
+    <h4 class="d-flex  mb-3">
+      <span class="text-muted">Your cart</span>
+    </h4>
+    <ul class="list-group mb-3">
 
-        <li class="list-group-item d-flex justify-content-between lh-condensed" *ngFor="let item of basket">
-          <button type="button" class="close" aria-label="Close" (click)="removeItemFromBasket(item)">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <div>
-            <h6 class="my-0">{{item.title}}</h6>
-            <small class="text-muted" *ngFor="let author of item.author">{{author.name}}</small>
-          </div>
-          <span class="text-muted">${{item.price}}</span>
-        </li>
-
-        <li class="list-group-item d-flex justify-content-between bg-light" *ngIf="correctPromoCode && totalPrice">
-          <div class="text-success">
-            <h6 class="my-0">Promo code</h6>
-            <small>{{promoCode.code}}</small>
-          </div>
-          <span class="text-success">-${{getCurrentAmount()}}</span>
-        </li>
-
-        <li class="list-group-item d-flex justify-content-between">
-          <span>Total (USD)</span>
-          <strong>${{this.totalPrice}}</strong>
-        </li>
-      </ul>
-
-      <form class="card p-2 ">
-        <div class="input-group">
-          <input type="text" class="form-control" [ngClass]="{wrongCoupon: wrongPromoCode}" name="promoCode"
-            [(ngModel)]="code" placeholder="Promo code">
-          <div class="input-group-append">
-            <button type="submit" class="btn btn-secondary" (click)="redeemCoupon()">Redeem</button>
-          </div>
+      <li class="list-group-item d-flex justify-content-between lh-condensed" *ngFor="let item of basket">
+        <button type="button" class="close" aria-label="Close" (click)="removeItemFromBasket(item)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div>
+          <h6 class="my-0">{{item.title}}</h6>
+          <small class="text-muted" *ngFor="let author of item.author">{{author.name}}</small>
         </div>
-      </form>
-    </div>
+        <span class="text-muted">${{item.price}}</span>
+      </li>
 
+      <li class="list-group-item d-flex justify-content-between bg-light" *ngIf="correctPromoCode && totalPrice">
+        <div class="text-success">
+          <h6 class="my-0">Promo code</h6>
+          <small>{{promoCode.code}}</small>
+        </div>
+        <span class="text-success">-${{getCurrentAmount()}}</span>
+      </li>
 
+      <li class="list-group-item d-flex justify-content-between">
+        <span>Total (USD)</span>
+        <strong>${{this.totalPrice}}</strong>
+      </li>
+    </ul>
+
+    <form class="card p-2 ">
+      <div class="input-group">
+        <input type="text" class="form-control" [ngClass]="{wrongCoupon: wrongPromoCode}" name="promoCode"
+          [(ngModel)]="code" placeholder="Promo code">
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-secondary" (click)="redeemCoupon()">Redeem</button>
+        </div>
+      </div>
+    </form>
   </div>
+
+
   <app-checkout></app-checkout>
 </div>

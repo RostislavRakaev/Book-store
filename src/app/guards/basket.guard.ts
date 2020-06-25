@@ -29,7 +29,6 @@ export class BasketGuard implements CanActivate {
 
 
 
-
   }
 
 }
