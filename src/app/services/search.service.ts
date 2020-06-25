@@ -9,17 +9,17 @@ import { BookService } from './book.service';
 })
 export class SearchService {
 
-  baseUrl: string = 'http://localhost:3000/api/search';
+  baseUrl: string = 'https://book-server-api.herokuapp.com/api/search';
 
   constructor(private http: HttpClient, private bookService: BookService) { }
 
   searchBook(inputs) {
-      return inputs
-        .pipe(
+    return inputs
+      .pipe(
         debounceTime(200),
         distinctUntilChanged(),
-        switchMap((input: string)=> input.length > 0? this.bookSearch(input): this.bookService.getPaginatedBooks())
-        )
+        switchMap((input: string) => input.length > 0 ? this.bookSearch(input) : this.bookService.getPaginatedBooks())
+      )
   }
 
   bookSearch(title) {
@@ -29,14 +29,14 @@ export class SearchService {
   searchAuthor(inputs) {
     return inputs
       .pipe(
-      debounceTime(200),
-      distinctUntilChanged(),
-      switchMap((input: string)=> this.authorSearcher(input))
+        debounceTime(200),
+        distinctUntilChanged(),
+        switchMap((input: string) => this.authorSearcher(input))
       )
-}
+  }
 
   authorSearcher(name) {
-    return this.http.get(this.baseUrl + '?author=' + name );
+    return this.http.get(this.baseUrl + '?author=' + name);
   }
 
 

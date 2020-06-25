@@ -8,9 +8,9 @@ import { Author } from '../adminspanel/authors/author';
 })
 export class AuthorService {
 
-  url: string = 'http://localhost:3000/api/authors'
-  
-  constructor(private http:HttpClient) { }
+  url: string = 'https://book-server-api.herokuapp.com/api/authors'
+
+  constructor(private http: HttpClient) { }
 
   getAuthors(): Observable<Author[]> {
     return this.http.get<Author[]>(this.url);

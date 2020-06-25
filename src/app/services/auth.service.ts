@@ -8,37 +8,37 @@ import { User } from '../login-registration/user';
   providedIn: 'root'
 })
 export class AuthService {
-  
-  registeredUrl = 'http://localhost:3000/api/users';
-  loginUrl = 'http://localhost:3000/api/login';
+
+  registeredUrl = 'https://book-server-api.herokuapp.com/api/users';
+  loginUrl = 'https://book-server-api.herokuapp.com/api/login';
 
   constructor(private http: HttpClient) { }
 
   registerUser(user: User): Observable<User> {
     return this.http.post<User>(this.registeredUrl, user);
   }
-  
+
   loginUser(user: any): Observable<any> {
     return this.http.post<any>(this.loginUrl, user);
   }
 
   get logIn(): boolean {
-    if(localStorage.getItem('token')) {
+    if (localStorage.getItem('token')) {
       let role = this.getDecoded().role;
-      if(role === 'user') {
+      if (role === 'user') {
         return true;
       }
       else {
         return false;
       }
     }
-    
+
   }
 
   get LogInForAdmin(): boolean {
-    if(localStorage.getItem('token')) {
+    if (localStorage.getItem('token')) {
       let role = this.getDecoded().role;
-      if(role === "admin") {
+      if (role === "admin") {
         return true;
       }
       else {

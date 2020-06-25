@@ -9,7 +9,7 @@ import { retry } from 'rxjs/operators';
 })
 export class BookService {
 
-  url: string = 'http://localhost:3000/api';
+  url: string = 'https://book-server-api.herokuapp.com/api';
 
   constructor(private http: HttpClient) { }
 
@@ -24,7 +24,7 @@ export class BookService {
   }
 
   getPaginatedBooks(page = 1): any {
-    return this.http.get<any>(`http://localhost:3000/api/books-pag?page=${page}`);
+    return this.http.get<any>(`${this.url}/books-pag?page=${page}`);
   }
 
 

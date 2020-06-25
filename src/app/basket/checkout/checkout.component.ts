@@ -5,7 +5,8 @@ import {
   OnInit,
   ViewChild,
   ElementRef,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  Input
 } from '@angular/core';
 
 import { NgForm } from '@angular/forms';

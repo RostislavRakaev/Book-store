@@ -11,8 +11,8 @@ export class BasketService {
   basket: Books[] = [];
   totalPrice: number;
 
-  paymentUrl: string = 'http://localhost:3000/payment/charge';
-  url: string = 'http://localhost:3000/api';
+  paymentUrl: string = 'https://book-server-api.herokuapp.com/payment/charge';
+  url: string = 'https://book-server-api.herokuapp.com/api';
 
   constructor(private http: HttpClient) { }
 
@@ -46,8 +46,16 @@ export class BasketService {
     return this.basket.reduce((prevValue: number, item: Books): number => prevValue += item.price, 0);
   }
 
+  getTotalPriceWithDiscount(): number {
+    return this.totalPrice;
+  }
+  getAppliedDiscount(disc: number): void {
+    this.totalPrice = this.getTotaPrice();
+    this.totalPrice -= disc;
+  }
+
   submitPayment(): Observable<any> {
-    return this.http.post(this.paymentUrl, { amount: this.getTotaPrice() });
+    return this.http.post(this.paymentUrl, { amount: this.getTotalPriceWithDiscount() });
   }
 
   purchase(userId: number, bookId: Books[]): Observable<Books[]> {

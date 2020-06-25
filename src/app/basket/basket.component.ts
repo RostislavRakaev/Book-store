@@ -7,8 +7,6 @@ import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs';
 import { CouponsService } from '../services/coupons.service';
 import { Coupon } from '../adminspanel/coupons/coupon';
-import { PersonalInfo } from './personalInfo';
-
 
 @Component({
   selector: 'app-basket',
@@ -21,22 +19,11 @@ export class BasketComponent implements OnInit, OnDestroy {
   totalPrice: number;
   currentDiscountAmount: number;
 
-  code: string = '';
+  code: string;
   promoCode: Coupon;
 
   wrongPromoCode: boolean = false;
   correctPromoCode: boolean = false;
-
-  personalInfo: PersonalInfo = {
-    first_name: '',
-    last_name: '',
-    email: '',
-    address1: '',
-    country: '',
-    state: '',
-    zip: '',
-    address2: ''
-  }
 
   subscriptions$: Subscription = new Subscription();
 
@@ -77,7 +64,7 @@ export class BasketComponent implements OnInit, OnDestroy {
 
   getDiscountAmount(): number {
     if (this.promoCode) {
-      let discount = this.promoCode.discount / 100;
+      const discount = this.promoCode.discount / 100;
       this.currentDiscountAmount = this.totalPrice * discount;
 
       return this.currentDiscountAmount;
@@ -98,6 +85,7 @@ export class BasketComponent implements OnInit, OnDestroy {
 
 
     if (this.getDiscountAmount() !== undefined) {
+      this.basketService.getAppliedDiscount(this.getDiscountAmount())
       this.totalPrice -= this.getDiscountAmount();
     }
 

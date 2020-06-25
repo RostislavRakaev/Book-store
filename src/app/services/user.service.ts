@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
 })
 export class UserService {
 
-  url: string = 'http://localhost:3000/api/users';
+  url: string = 'https://book-server-api.herokuapp.com/api/users';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
@@ -18,7 +18,7 @@ export class UserService {
       'authorization': `Bearer ${this.authService.getToken()}`
     })
 
-    return this.http.get<User[]>(this.url, {headers});
+    return this.http.get<User[]>(this.url, { headers });
   }
 
   editUser(user: User): Observable<User> {
