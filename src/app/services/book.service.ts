@@ -9,7 +9,7 @@ import { retry } from 'rxjs/operators';
 })
 export class BookService {
 
-  url: string = 'https://book-server-api.herokuapp.com/api';
+  url: string = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) { }
 

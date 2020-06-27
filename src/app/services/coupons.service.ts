@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class CouponsService {
 
-  url: string = 'https://book-server-api.herokuapp.com/api/coupons';
+  url: string = 'http://localhost:3000/api/coupons';
 
   constructor(private http: HttpClient) { }
 

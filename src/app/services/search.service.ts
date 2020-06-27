@@ -9,7 +9,7 @@ import { BookService } from './book.service';
 })
 export class SearchService {
 
-  baseUrl: string = 'https://book-server-api.herokuapp.com/api/search';
+  baseUrl: string = 'http://localhost:3000/api/search'
 
   constructor(private http: HttpClient, private bookService: BookService) { }
 

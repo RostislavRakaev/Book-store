@@ -11,8 +11,8 @@ export class BasketService {
   basket: Books[] = [];
   totalPrice: number;
 
-  paymentUrl: string = 'https://book-server-api.herokuapp.com/payment/charge';
-  url: string = 'https://book-server-api.herokuapp.com/api';
+  paymentUrl: string = 'http://localhost:3000/payment/charge';
+  url: string = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) { }
 
@@ -55,7 +55,7 @@ export class BasketService {
   }
 
   submitPayment(): Observable<any> {
-    return this.http.post(this.paymentUrl, { amount: this.getTotalPriceWithDiscount() });
+    return this.http.post(this.paymentUrl, { amount: this.getTotaPrice() });
   }
 
   purchase(userId: number, bookId: Books[]): Observable<Books[]> {

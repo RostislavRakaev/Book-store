@@ -8,7 +8,7 @@ import { Author } from '../adminspanel/authors/author';
 })
 export class AuthorService {
 
-  url: string = 'https://book-server-api.herokuapp.com/api/authors'
+  url: string = 'http://localhost:3000/api/authors'
 
   constructor(private http: HttpClient) { }
 

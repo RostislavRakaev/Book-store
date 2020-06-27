@@ -9,8 +9,8 @@ import { User } from '../login-registration/user';
 })
 export class AuthService {
 
-  registeredUrl = 'https://book-server-api.herokuapp.com/api/users';
-  loginUrl = 'https://book-server-api.herokuapp.com/api/login';
+  registeredUrl = 'http://localhost:3000/api/users';
+  loginUrl = 'http://localhost:3000/api/login';
 
   constructor(private http: HttpClient) { }
 
